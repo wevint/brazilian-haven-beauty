@@ -16,10 +16,10 @@
 | Feature Area | Fresha (market leader) | Boulevard (premium salons) | Our target |
 |---|---|---|---|
 | Booking flow | 3-step, staff first, no account required | 4-step, smart scheduling | 4-step wizard, staff + pricing upfront |
-| Staff profiles | Photo, specialty, reviews | Bio, portfolio, real-time availability | Full profile + tier-based pricing visible |
+| Staff profiles | Photo, specialty, reviews | Bio, portfolio, real-time availability | Full profile + tier-based pricing visible in MVP; public reviews deferred |
 | Subscriptions | Credit-based memberships | Membership + package bundles | Per-staff-tier memberships + packages |
 | Admin calendar | Multi-staff grid, drag & drop | Timeline + grid hybrid | FullCalendar multi-staff grid + drag |
-| Notifications | Email + SMS, configurable intervals | Email + SMS + push | Email + SMS (push in v2) |
+| Notifications | Email + SMS, configurable intervals | Email + SMS + push | Email + SMS in MVP; push deferred |
 | Analytics | Revenue, utilization, retention | AI-powered insights, cohort analysis | Revenue KPIs, no-show rate, utilization |
 | Mobile admin | Native iOS/Android | Native iOS + web | Mobile-responsive web (native in v2) |
 | Google Ads | Landing page suggestions | No built-in | Claude Code campaign management CLI |
@@ -153,7 +153,7 @@
 - Rate limits well above salon send volumes (free tier: 100/day, Pro: 50k/month).
 
 **SMS — Twilio**:
-- Market standard for transactional SMS; programmable number with Webhooks for two-way messaging (future Principle VII compliance).
+- Market standard for transactional SMS; programmable number with Webhooks. Two-way messaging is deferred beyond MVP.
 - Twilio's Verify API for phone number OTP at account claim time.
 
 **Alternatives considered**:
@@ -167,7 +167,7 @@
 
 ### Decision: Cloudflare R2 (S3-compatible, zero egress fees)
 **Rationale**:
-- Staff photos, service images, gift card designs, email header images.
+- Staff photos, service images, and email header images.
 - Zero egress fees vs. AWS S3 (significant at scale).
 - Cloudflare Images for automatic resizing and WebP conversion (performance).
 - S3-compatible API: standard `@aws-sdk/client-s3` works against R2 with endpoint override.

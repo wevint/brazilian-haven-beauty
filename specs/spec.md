@@ -3,9 +3,48 @@
 **Feature**: `platform-mvp-v1`
 **Created**: 2026-04-17
 **Status**: Draft
-**Input**: User description: "Build the Brazilian Haven Beauty custom platform to fully replace Vagaro. Public website with pages Home, About, Services, Prices, Booking, Contact, and a dedicated Brazilian Wax landing page, styled after https://red-badger-285858.hostingersite.com. Core client capabilities: browse services with staff-linked pricing, book appointments, purchase subscription plans with per-staff pricing, buy service packages (combos), redeem coupons. Admin dashboard for appointments, staff, services, prices, coupons, memberships, and packages. Pages must be SEO-optimized for Google Ads; campaign management must be operable from Claude Code."
+**Input**: User description: "Build the Brazilian Haven Beauty custom platform to replace the core Vagaro flows used at launch. Public website with pages Home, About, Services, Prices, Booking, Contact, and a dedicated Brazilian Wax landing page, styled after https://red-badger-285858.hostingersite.com. Core client capabilities: browse services with staff-linked pricing, book appointments, purchase subscription plans with per-staff pricing, buy service packages (combos), redeem coupons. Admin dashboard for appointments, staff, services, prices, coupons, memberships, and packages. Pages must be SEO-optimized for Google Ads; campaign management must be operable from Claude Code."
 
 ---
+
+## Scope Boundaries
+
+### In Scope for MVP v1
+
+- public website: Home, About, Services, Prices, Booking, Contact, Brazilian Wax
+- booking with live availability and staff-tier pricing
+- memberships, packages, and coupons
+- client accounts and notification preferences
+- admin dashboard for core daily operations
+- Stripe, PayPal, and Affirm-enabled payment flows
+- email and SMS automation
+- SEO/conversion instrumentation
+- Google Ads CLI operated from Claude Code
+
+### Explicitly Out of Scope for MVP v1
+
+- gift cards
+- in-person retail checkout / POS
+- two-way client/staff messaging
+- public reviews system
+- payroll tracking
+- invoicing
+- push notifications
+- full mandatory Vagaro migration as a launch blocker
+- full “every Vagaro flow” parity
+
+### Requires Separate Future Spec
+
+- gift cards
+- retail / POS
+- messaging
+- reviews
+- payroll
+- invoicing
+- push notifications
+- full migration program
+- historical data import
+- multi-location support
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -45,7 +84,7 @@ An owner or staff member signs into the admin dashboard to see today's appointme
 
 ### User Story 3 — Payment capture without storing raw card data (Priority: P1)
 
-Every transaction — new booking, package purchase, membership signup, in-person retail checkout, gift card purchase — flows through Stripe or PayPal. The platform never stores raw card numbers. Affirm (BNPL) is offered via Stripe for eligible purchases.
+Every transaction in MVP v1 — new booking, package purchase, membership signup, and saved-payment-method setup — flows through Stripe or PayPal. The platform never stores raw card numbers. Affirm (BNPL) is offered via Stripe for eligible purchases.
 
 **Why this priority**: No payment, no launch. Also a hard constitution constraint (Principle V): any card-storage leak blocks release entirely.
 
@@ -122,7 +161,7 @@ Clients receive appointment reminders by email and SMS at configured intervals (
 
 **Acceptance Scenarios**:
 
-1. **Given** a client has an upcoming appointment, **When** the reminder window is reached, **Then** a reminder is sent via the client's opted-in channels (email, SMS, push).
+1. **Given** a client has an upcoming appointment, **When** the reminder window is reached, **Then** a reminder is sent via the client's opted-in channels (email and SMS where enabled).
 2. **Given** a client cancels a booking, **When** a waitlist exists for the freed slot, **Then** the next waitlisted client is notified with a time-bounded claim link.
 3. **Given** a member's next billing is in 3 days, **When** the automation runs, **Then** a renewal reminder is sent with the charged amount and their plan details.
 4. **Given** a client has elected to opt out of marketing messages, **When** a promotional send is generated, **Then** their profile is excluded from that send but transactional reminders still go through.
@@ -200,7 +239,7 @@ An operator uses Claude Code to create, edit, pause, and report on Google Ads ca
 
 **Staff & services**
 
-- **FR-012**: Each staff member MUST have a profile with name, photo, bio, specialties, seniority tier, reviews, and visible per-tier pricing.
+- **FR-012**: Each staff member MUST have a profile with name, photo, bio, specialties, seniority tier, and visible per-tier pricing.
 - **FR-013**: Every service MUST support per-staff-tier pricing and per-staff-tier duration. Flat pricing across tiers is not permitted unless the admin explicitly sets all tiers to the same value.
 - **FR-014**: Admins MUST be able to create, edit, archive, and reorder services without code changes.
 - **FR-015**: Admins MUST be able to add, edit, deactivate, and set schedules for staff without code changes.
@@ -218,8 +257,8 @@ An operator uses Claude Code to create, edit, pause, and report on Google Ads ca
 - **FR-021**: All payments MUST be processed via Stripe or PayPal. Affirm MUST be offered via Stripe for eligible purchases.
 - **FR-022**: The platform MUST NOT store raw card data (PAN, CVV, expiry). Only gateway tokens and non-sensitive metadata (last-4, brand) may be persisted.
 - **FR-023**: Refunds MUST be executable from the admin dashboard against the original gateway transaction.
-- **FR-024**: The platform MUST support digital and physical gift card issuance and redemption with tokenized references, never raw card data.
-- **FR-025**: In-person retail/product checkout MUST use the same payment rail as online bookings.
+- **FR-024**: The platform MUST support saved payment methods through gateway-vaulted tokenized references only, never raw card data.
+- **FR-025**: Gift cards and in-person retail checkout are out of scope for MVP v1 and require separate specification before implementation.
 
 **Promotions**
 
@@ -252,15 +291,15 @@ An operator uses Claude Code to create, edit, pause, and report on Google Ads ca
 
 **Vagaro decommissioning**
 
-- **FR-040**: At cutover, the platform MUST provide a clean customer-facing replacement for every Vagaro flow currently in use (booking, memberships, gift cards, messaging, purchases, account access).
-- **FR-041**: At cutover, the platform MUST migrate client accounts (name, email, contact details), active membership enrollments, remaining package session counts, and unredeemed gift card balances from Vagaro. Historical appointment records and payment history are NOT migrated. Existing clients claim their new account via an email-verified flow sent at launch.
+- **FR-040**: At launch, the platform MUST provide a clean customer-facing replacement for the MVP v1 flows in scope: public website, booking, memberships, packages, coupons, account access, and core admin operations.
+- **FR-041**: Automated Vagaro migration is not a hard launch requirement for MVP v1. Any import work in v1 is limited to scoped migration tooling and manual validation for client accounts, active memberships, and remaining package session counts. Gift card balances, historical appointment records, payment history, and other non-MVP domains are out of scope.
 - **FR-042**: The website MUST display a language toggle in the global header, defaulting to English. Selecting Portuguese switches all public-facing page content to Portuguese. The selected language is persisted for the session.
 - **FR-043**: All automated email notifications (booking confirmation, reminder, cancellation, membership renewal, welcome) MUST include both English and Portuguese content in the same message, clearly separated by language.
 
 ### Key Entities *(include if feature involves data)*
 
 - **Client**: A person who books, purchases, or holds a membership. Fields include identity, contact, notification preferences, saved-payment-method references (token only), booking history, purchase history, and active memberships/packages.
-- **Staff**: A service provider. Fields include identity, role, seniority tier, specialties, bio, photo, per-day schedule/availability, reviews, and per-staff pricing overrides.
+- **Staff**: A service provider. Fields include identity, role, seniority tier, specialties, bio, photo, per-day schedule/availability, and per-staff pricing overrides.
 - **Service**: A bookable offering. Fields include name, description, base duration, per-staff-tier pricing and per-staff-tier duration, category, publish status, SEO metadata.
 - **Appointment**: A scheduled instance of a service. Fields include client, staff, service, start/end, status (scheduled / checked-in / completed / no-show / cancelled), payment reference, and applied credits (membership / package / coupon).
 - **Membership Plan**: A recurring subscription definition. Fields include name, billing cycle, per-staff-tier price, credits granted per cycle, covered services, and terms.
@@ -268,9 +307,8 @@ An operator uses Claude Code to create, edit, pause, and report on Google Ads ca
 - **Service Package**: A prepaid bundle definition. Fields include name, included sessions, bundle price, covered services, staff-tier restrictions, expiration rule.
 - **Client Package**: A purchased instance of a package for a client. Fields include sessions remaining, expiration, purchase reference.
 - **Coupon**: A promotional code. Fields include code, scope, discount type/amount, validity window, usage caps, first-time-client flag.
-- **Gift Card**: A prepaid balance instrument. Fields include tokenized reference, balance, currency, issued-to, redeemed-by, expiration (if any).
-- **Payment Transaction**: A gateway-mediated transaction record. Fields include gateway, transaction reference, amount, currency, status, related entity (appointment / membership / package / gift-card / retail), last-4, brand. No PAN/CVV.
-- **Notification Preference**: A client's per-channel (email / SMS / push), per-category (transactional / marketing / reminders) consent matrix.
+- **Payment Transaction**: A gateway-mediated transaction record. Fields include gateway, transaction reference, amount, currency, status, related entity (appointment / membership / package), last-4, brand. No PAN/CVV.
+- **Notification Preference**: A client's per-channel (email / SMS), per-category (transactional / marketing / reminders) consent matrix.
 - **Ad Campaign Reference**: A local record of a Google Ads campaign (id, name, status, budget, linked landing page, latest synced metrics) that the Claude-Code-operated campaign layer reads and writes.
 
 ---
@@ -282,9 +320,9 @@ An operator uses Claude Code to create, edit, pause, and report on Google Ads ca
 - **SC-001**: A new client can complete a first booking — from landing on the homepage to receiving a confirmation — in under 3 minutes on mobile.
 - **SC-002**: 95% of real-availability lookups (a client opening the booking calendar for a service/staff/date) return within 1 second.
 - **SC-003**: Double-booking incidents on the platform fall to 0 across concurrent-load testing at 50 simultaneous booking attempts per staff member per minute.
-- **SC-004**: Vagaro is fully decommissioned — no new bookings, no new memberships, no new gift-card issuance routed through Vagaro — within 60 days of platform MVP go-live.
+- **SC-004**: Within 60 days of MVP v1 go-live, the platform is the primary channel for new bookings, memberships, and package purchases covered by the scoped launch flows.
 - **SC-005**: Appointment no-show rate drops by at least 25% compared to the pre-launch Vagaro baseline within 90 days post-launch, attributable to automated reminders.
-- **SC-006**: 80% of existing Vagaro clients successfully claim their new-platform account within 30 days of cutover.
+- **SC-006**: If a v1 account-claim rollout is executed, 80% of invited existing clients successfully claim their new-platform account within 30 days of launch.
 - **SC-007**: Zero incidents of raw card data stored locally, verified by automated scanning of the database and logs on every release.
 - **SC-008**: Every public page passes Google Rich Results Test with valid LocalBusiness and Service schema on release.
 - **SC-009**: Core Web Vitals (LCP, CLS, INP) pass Google's "Good" thresholds on mobile for Home, Services, Prices, Booking, and Brazilian Wax pages.
@@ -301,7 +339,7 @@ An operator uses Claude Code to create, edit, pause, and report on Google Ads ca
 - **USD currency.** Single currency at launch.
 - **Design reference provided.** The reference site `https://red-badger-285858.hostingersite.com` is the authoritative visual/layout reference; the `ui-ux-pro-max` agent will be used to produce the design system and implement the frontend. A `specs/design.md` artifact will be produced before design-heavy pages (Home, About, Brazilian Wax) are implemented, per constitution Principle VI.
 - **Stripe is the primary gateway.** PayPal is an alternate option at checkout. Affirm is offered through Stripe for eligible cart values.
-- **Notification channels.** Email and SMS at launch; push notifications in a later iteration. SMS requires a dedicated delivery provider (to be selected in the plan phase).
+- **Notification channels.** Email and SMS at launch; push notifications are out of scope for MVP v1. SMS requires a dedicated delivery provider (to be selected in the plan phase).
 - **Google Ads account exists.** The business already owns a Google Ads account with historical campaigns running against the reference site. Credentials and API access will be provided for the Claude-Code campaign layer.
 - **Existing ad campaigns on the reference site.** Active campaigns will be paused, migrated, or redirected to the new landing pages during cutover — not left pointing at the old site.
 - **Authentication.** Client and admin accounts use email + password with industry-standard session/OAuth patterns; exact choice is a planning-phase decision.

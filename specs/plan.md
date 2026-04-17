@@ -7,9 +7,41 @@
 
 ## Summary
 
-Build a full-stack, white-label beauty booking platform that fully replaces Vagaro for Brazilian Haven Beauty. The platform exposes a bilingual (EN/PT) public website with 7 pages + a Brazilian Wax landing page, a client-facing booking and account system, and a unified admin dashboard for appointments/staff/services/promotions/memberships. All payment flows route through Stripe and PayPal (PCI-SAQ-A). Google Ads campaign management is operable from Claude Code via a TypeScript CLI layer over the Google Ads API.
+Build a full-stack, white-label beauty booking platform for Brazilian Haven Beauty that replaces the core launch flows currently needed from Vagaro. The platform exposes a bilingual (EN/PT) public website with 7 pages + a Brazilian Wax landing page, a client-facing booking and account system, and a unified admin dashboard for appointments/staff/services/promotions/memberships/packages. All payment flows route through Stripe and PayPal (PCI-SAQ-A). Google Ads campaign management is operable from Claude Code via a TypeScript CLI layer over the Google Ads API.
 
 **Tech approach**: Next.js 15 App Router monolith (TypeScript) with Prisma + PostgreSQL (Neon), deployed on Vercel. Shadcn/ui + Tailwind CSS 4 for the UI system. tRPC v11 for type-safe API. Auth.js v5 for sessions. Background automation via Inngest. SMS via Twilio, email via Resend.
+
+## Scope Boundary
+
+**MVP v1 includes**:
+- public website and bilingual marketing pages
+- booking, memberships, packages, coupons, and accounts
+- Stripe/PayPal/Affirm payment flows
+- email and SMS automation
+- core admin daily operations
+- Google Ads conversion instrumentation and CLI
+
+**Explicitly out of scope for MVP v1**:
+- gift cards
+- in-person retail checkout / POS
+- two-way client/staff messaging
+- public reviews system
+- payroll tracking
+- invoicing
+- push notifications
+- full mandatory Vagaro migration as a launch blocker
+
+**Needs separate future specification**:
+- gift cards
+- retail / POS
+- messaging
+- reviews
+- payroll
+- invoicing
+- push notifications
+- full migration and reconciliation program
+- historical data import
+- multi-location support
 
 ---
 
@@ -76,11 +108,11 @@ Build a full-stack, white-label beauty booking platform that fully replaces Vaga
 *GATE: Evaluated before Phase 0 research. Re-checked post-design.*
 
 - [x] **I. Client-First Experience** — Booking flow is a 4-step wizard (service → staff → datetime → payment) with progressive disclosure. Mobile-first. Staff pricing is shown inline as the user selects staff. No dead ends. ✅
-- [x] **II. Custom-Built Platform** — All booking, scheduling, memberships, packages, and payments are first-party. Stripe, PayPal, Twilio, Resend are integration points (additive), not runtime dependencies. Vagaro is eliminated. ✅
+- [x] **II. Custom-Built Platform** — All booking, scheduling, memberships, packages, and payments in MVP v1 are first-party. Stripe, PayPal, Twilio, Resend are integration points (additive), not runtime dependencies. No runtime Vagaro dependency remains for the scoped launch flows. ✅
 - [x] **III. Full Service & Pricing Customization** — Prisma schema enforces `ServicePricing` as a per-(service, staffTier) join table. No service has a single flat price field. All booking, membership, and package flows read from this table. ✅
 - [x] **IV. Trust and Transparency** — Price shown on service card updates when staff is selected. Membership terms and package inclusions displayed before checkout. Cancellation policy shown at booking confirmation step. ✅
 - [x] **V. Security Without Local Card Storage** — Stripe Payment Element (iframe) handles card entry; we store only `stripePaymentIntentId`, `last4`, `brand`. PayPal generates an `orderId`. No PAN/CVV in any table. Verified via DB column audit in CI. ✅
-- [x] **VI. Premium Brazilian Wellness Brand Identity** — `specs/design.md` artifact is a required pre-condition for Home, About, and Brazilian Wax pages. Shadcn/ui tokens will be configured to match the approved design system. ✅ *(design.md not yet created — flagged as Phase 0 blocker for UI implementation)*
+- [x] **VI. Premium Brazilian Wellness Brand Identity** — `specs/design.md` artifact is a required pre-condition for Home, About, and Brazilian Wax pages. Shadcn/ui tokens will be configured to match the approved design system. ✅
 - [x] **VII. Automated Client Engagement** — Inngest functions handle: appointment reminders (24h + 2h), waitlist open-slot notifications, membership renewal warnings, welcome sequences, low-credit alerts. Zero manual triggers required. ✅
 
 **Constitution Check Result**: **PASS** — all 7 gates clear. Note: `specs/design.md` is gated before UI implementation of design-heavy pages, not before back-end development.
@@ -93,6 +125,7 @@ Build a full-stack, white-label beauty booking platform that fully replaces Vaga
 
 ```
 specs/
+├── scope.md             ← scope review artifact
 ├── plan.md              ← this file
 ├── research.md          ← Phase 0 output
 ├── data-model.md        ← Phase 1 output
@@ -213,3 +246,4 @@ No constitution violations. No unjustified complexity.
 | Inngest (not BullMQ) | Vercel-native serverless background jobs; no Redis worker process to manage; great DX |
 | `packages/trpc` separated from `apps/web` | Enables future React Native mobile app to consume same type-safe API without code duplication |
 | `specs/design.md` gate before UI | Constitution Principle VI is non-negotiable; back-end can be built in parallel |
+| Several future domains deferred from MVP | Keeps the launch scope aligned with the implemented task plan and avoids hidden delivery risk |

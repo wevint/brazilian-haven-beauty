@@ -16,7 +16,6 @@ Client ─────────────── Appointment ─────
   ├─ Membership ─── MembershipPlan    ServicePricing
   ├─ ClientPackage ── ServicePackage       (join)
   ├─ Coupon (redeemed)
-  ├─ GiftCard (issued/redeemed)
   └─ PaymentTransaction
          │
     (Stripe / PayPal)
@@ -90,7 +89,7 @@ A service provider with a profile, seniority tier, and schedule.
 - `StaffSchedule[]` — weekly recurring availability windows + exceptions
 - `Appointment[]` — appointments assigned to this staff
 - `ServicePricing[]` — per-(service, tier) price records authored when tier changes
-- `Review[]` — client reviews
+- `Review[]` — deferred; future separately specified reviews feature
 
 **State transitions**: `isActive` toggled by owner/manager. When set to `false`, future slots removed and existing appointments flagged for reassignment.
 
@@ -185,7 +184,7 @@ A scheduled instance of a service for a client with a specific staff member.
 | `endAt` | DateTime | UTC |
 | `status` | Enum | `scheduled \| checked_in \| completed \| no_show \| cancelled` |
 | `priceSnapshotUsd` | Decimal(10,2) | Price at time of booking (ServicePricing may change) |
-| `paymentMethod` | Enum `membership_credit \| package \| coupon \| stripe \| paypal \| gift_card` | Primary payment method used |
+| `paymentMethod` | Enum `membership_credit \| package \| coupon \| stripe \| paypal` | Primary payment method used in MVP v1 |
 | `membershipId` | UUID? | FK → Membership (if credit consumed) |
 | `clientPackageId` | UUID? | FK → ClientPackage (if session consumed) |
 | `couponId` | UUID? | FK → Coupon (if applied) |
@@ -389,22 +388,8 @@ A promotional code.
 
 ### 14. GiftCard
 
-A prepaid balance instrument.
-
-**Fields**:
-
-| Field | Type | Notes |
-|---|---|---|
-| `id` | UUID | |
-| `code` | String (unique) | Tokenized reference (never raw card data) |
-| `issuedToClientId` | UUID? | FK → Client; null for physical/retail GC |
-| `initialBalanceUsd` | Decimal(10,2) | |
-| `currentBalanceUsd` | Decimal(10,2) | |
-| `currency` | String | "USD" |
-| `status` | Enum `active \| exhausted \| expired \| voided` | |
-| `expiresAt` | DateTime? | `null` = no expiry |
-| `purchasedAt` | DateTime | |
-| `paymentTransactionId` | UUID | FK → PaymentTransaction (the purchase) |
+Deferred from MVP v1. Gift cards require a separate future specification and are not part of the
+current implementation scope.
 
 ---
 
@@ -426,7 +411,7 @@ A gateway-mediated payment record. No PAN/CVV stored.
 | `status` | Enum `pending \| succeeded \| failed \| refunded \| partially_refunded` | |
 | `last4` | String? | Last 4 digits of card (display only) |
 | `cardBrand` | String? | "visa", "mastercard", etc. |
-| `relatedEntity` | Enum `appointment \| membership \| package \| gift_card \| retail` | What was paid for |
+| `relatedEntity` | Enum `appointment \| membership \| package` | What was paid for in MVP v1 |
 | `relatedEntityId` | UUID | FK to the related entity |
 | `refundedAmount` | Decimal(10,2) | Default 0 |
 | `refundedAt` | DateTime? | |
@@ -481,7 +466,8 @@ Per-client consent matrix for notification channels and categories.
 
 ### 18. Review
 
-A client review for a completed appointment.
+Deferred from MVP v1. Public reviews require a separate future specification and are not part of the
+current implementation scope.
 
 **Fields**:
 
@@ -577,7 +563,7 @@ Appointment → PaymentTransaction (direct payment)
 
 PaymentTransaction ←── ClientPackage (purchase)
 PaymentTransaction ←── Membership (subscription)
-PaymentTransaction ←── GiftCard (purchase)
+PaymentTransaction ←── GiftCard (deferred)
 ```
 
 ---
@@ -590,7 +576,7 @@ PaymentTransaction ←── GiftCard (purchase)
 | `Appointment` | `(clientId, startAt DESC)` | Client booking history |
 | `Appointment` | `(startAt, status)` | Admin calendar queries |
 | `Coupon` | `(code)` unique | Redemption lookup |
-| `GiftCard` | `(code)` unique | Redemption lookup |
+| `GiftCard` | Deferred from MVP v1 | Requires future specification |
 | `ServicePricing` | `(serviceId, staffTier)` unique | Price lookup at booking |
 | `ClientPackage` | `(clientId, status)` | Active package lookup |
 | `Membership` | `(clientId, status)` | Active membership lookup |

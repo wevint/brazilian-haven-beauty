@@ -330,11 +330,7 @@ Creates a Stripe PaymentIntent for a reservation.
 
 ## Router: `reviews`
 
-### `reviews.create` [client]
-**Input**: `{ appointmentId: string; overallRating: 1..5; punctualityRating: 1..5; valueRating: 1..5; serviceQualityRating: 1..5; comment?: string }`
-
-### `reviews.list` [public]
-**Input**: `{ staffId: string; limit?: number }` — published reviews only.
+Public reviews are out of scope for MVP v1 and require a separate specification before contract definition.
 
 ---
 

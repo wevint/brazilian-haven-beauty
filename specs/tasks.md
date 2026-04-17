@@ -1,11 +1,38 @@
 # Tasks: Brazilian Haven Beauty Platform MVP v1
 
 **Input**: Design documents from `/specs/`  
-**Prerequisites**: `plan.md`, `spec.md`, `research.md`, `data-model.md`, `design.md`, `components.md`, `tokens.md`, `contracts/`
+**Prerequisites**: `scope.md`, `plan.md`, `spec.md`, `research.md`, `data-model.md`, `design.md`, `components.md`, `tokens.md`, `contracts/`
 
 **Tests**: This task plan uses TDD. For each user story, write the listed contract, integration, and end-to-end tests first and confirm they fail before implementation.
 
 **Organization**: Tasks are grouped by user story to preserve independent delivery and testability, while following current market-standard web delivery practices: CI-first quality gates, contract coverage for external interfaces, unit/integration coverage on domain logic, and Playwright coverage on critical user flows.
+
+## Scope Boundary
+
+This task plan covers MVP v1 only.
+
+Included in this plan:
+- public website
+- booking
+- payments
+- memberships
+- packages
+- coupons
+- email and SMS automation
+- core admin operations
+- Google Ads CLI
+
+Explicitly not covered by this task plan:
+- gift cards
+- in-person retail checkout / POS
+- two-way client/staff messaging
+- public reviews system
+- payroll tracking
+- invoicing
+- push notifications
+- full mandatory Vagaro migration
+
+Items not covered here require separate specification before task generation.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -315,7 +342,7 @@
 - [ ] T123 [P] [POLISH] Add performance budgets and Web Vitals reporting in `apps/web/lib/observability/web-vitals.ts`
 - [ ] T124 [P] [POLISH] Add accessibility review fixes across public and booking components in `apps/web/components/`
 - [ ] T125 [P] [POLISH] Add structured data validation to CI in `.github/workflows/ci.yml`
-- [ ] T126 [P] [POLISH] Add migration/import scaffolding for Vagaro cutover in `packages/db/src/migrations/vagaro-import/`
+- [ ] T126 [P] [POLISH] Add scoped migration/import scaffolding for optional v1 cutover support in `packages/db/src/migrations/vagaro-import/`
 - [ ] T127 [POLISH] Run quickstart validation and update `specs/quickstart.md` where implementation details changed
 - [ ] T128 [POLISH] Finalize production readiness checklist in `docs/release-checklist.md`
 
@@ -379,6 +406,17 @@
 5. Automations
 6. Google Ads CLI
 
+### Deferred / Needs Separate Spec
+
+- gift cards
+- in-person retail checkout / POS
+- two-way client/staff messaging
+- public reviews system
+- payroll tracking
+- invoicing
+- push notifications
+- full migration and reconciliation program
+
 ### Market-Standard Delivery Practices
 
 - CI must gate on lint, typecheck, unit tests, integration tests, and contract tests
@@ -386,4 +424,3 @@
 - Contract tests protect webhooks, CLI commands, and tRPC interfaces from regressions
 - Domain logic lives in testable service modules, not page components
 - SEO, accessibility, and payment safety checks are part of the release path, not post-launch cleanup
-
