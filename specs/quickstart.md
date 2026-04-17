@@ -1,6 +1,6 @@
 # Quickstart: Brazilian Haven Beauty Platform MVP v1
 
-**Branch**: `001-platform-mvp-v1`  
+**Feature**: `platform-mvp-v1`  
 **Stack**: Next.js 15 · TypeScript · Prisma · PostgreSQL (Neon) · Upstash Redis · Vercel
 
 ---
@@ -21,8 +21,6 @@
 ```bash
 git clone https://github.com/<org>/brazilian-haven-beauty.git
 cd brazilian-haven-beauty
-git checkout 001-platform-mvp-v1
-
 pnpm install
 ```
 
@@ -221,7 +219,7 @@ pnpm build
 
 ## Deploy
 
-- Production deploys automatically on merge to `main` via Vercel Git integration.
+- Production deploys automatically on merge to `master` via Vercel Git integration.
 - Preview deploys are created for every PR (Neon branch per preview deployment via Neon GitHub Action).
 - Environment secrets are managed in Vercel Dashboard → Project → Environment Variables.
 

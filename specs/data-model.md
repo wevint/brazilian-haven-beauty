@@ -2,7 +2,7 @@
 
 **Phase**: 1 — Design & Contracts  
 **Date**: 2026-04-17  
-**Branch**: `001-platform-mvp-v1`
+**Feature**: `platform-mvp-v1`
 
 ---
 

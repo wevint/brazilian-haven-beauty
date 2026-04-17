@@ -1,6 +1,6 @@
 # Feature Specification: Brazilian Haven Beauty Platform MVP v1
 
-**Feature Branch**: `001-platform-mvp-v1`
+**Feature**: `platform-mvp-v1`
 **Created**: 2026-04-17
 **Status**: Draft
 **Input**: User description: "Build the Brazilian Haven Beauty custom platform to fully replace Vagaro. Public website with pages Home, About, Services, Prices, Booking, Contact, and a dedicated Brazilian Wax landing page, styled after https://red-badger-285858.hostingersite.com. Core client capabilities: browse services with staff-linked pricing, book appointments, purchase subscription plans with per-staff pricing, buy service packages (combos), redeem coupons. Admin dashboard for appointments, staff, services, prices, coupons, memberships, and packages. Pages must be SEO-optimized for Google Ads; campaign management must be operable from Claude Code."

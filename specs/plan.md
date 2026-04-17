@@ -1,7 +1,7 @@
 # Implementation Plan: Brazilian Haven Beauty Platform MVP v1
 
-**Branch**: `001-platform-mvp-v1` | **Date**: 2026-04-17 | **Spec**: [spec.md](spec.md)
-**Input**: Feature specification from `specs/001-platform-mvp-v1/spec.md`
+**Feature**: `platform-mvp-v1` | **Date**: 2026-04-17 | **Spec**: [spec.md](spec.md)
+**Input**: Feature specification from `specs/spec.md`
 
 ---
 
@@ -92,7 +92,7 @@ Build a full-stack, white-label beauty booking platform that fully replaces Vaga
 ### Documentation (this feature)
 
 ```
-specs/001-platform-mvp-v1/
+specs/
 ├── plan.md              ← this file
 ├── research.md          ← Phase 0 output
 ├── data-model.md        ← Phase 1 output
