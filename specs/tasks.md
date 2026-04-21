@@ -55,12 +55,12 @@ Items not covered here require separate specification before task generation.
 
 **Purpose**: Initialize the monorepo, tooling, and baseline quality gates.
 
-- [ ] T001 [SETUP] Create workspace root files `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.gitignore`, `.editorconfig`, `.npmrc`
-- [ ] T002 [P] [SETUP] Create shared config package scaffolding in `packages/config/package.json`, `packages/config/tsconfig.base.json`, `packages/config/eslint/`, `packages/config/prettier/`
-- [ ] T003 [P] [SETUP] Create web app scaffolding in `apps/web/package.json`, `apps/web/tsconfig.json`, `apps/web/next.config.ts`, `apps/web/postcss.config.js`
-- [ ] T004 [P] [SETUP] Create shared test and CI scaffolding in `vitest.config.ts`, `playwright.config.ts`, `.github/workflows/ci.yml`
-- [ ] T005 [SETUP] Create root scripts for `lint`, `typecheck`, `test`, `e2e`, `build`, and `dev` in `package.json`
-- [ ] T006 [P] [SETUP] Create environment templates in `apps/web/.env.example` and `tools/google-ads-cli/.env.example`
+- [X] T001 [SETUP] Create workspace root files `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.gitignore`, `.editorconfig`, `.npmrc`
+- [X] T002 [P] [SETUP] Create shared config package scaffolding in `packages/config/package.json`, `packages/config/tsconfig.base.json`, `packages/config/eslint/`, `packages/config/prettier/`
+- [X] T003 [P] [SETUP] Create web app scaffolding in `apps/web/package.json`, `apps/web/tsconfig.json`, `apps/web/next.config.ts`, `apps/web/postcss.config.js`
+- [X] T004 [P] [SETUP] Create shared test and CI scaffolding in `vitest.config.ts`, `playwright.config.ts`, `.github/workflows/ci.yml`
+- [X] T005 [SETUP] Create root scripts for `lint`, `typecheck`, `test`, `e2e`, `build`, and `dev` in `package.json`
+- [X] T006 [P] [SETUP] Create environment templates in `apps/web/.env.example` and `tools/google-ads-cli/.env.example`
 
 ---
 
