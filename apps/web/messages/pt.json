@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "services": "Serviços",
+    "prices": "Preços",
+    "booking": "Agendar Agora",
+    "contact": "Contato"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados.",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "tagline": "Depilação brasileira premium e serviços de beleza."
+  },
+  "booking": {
+    "title": "Agendar Consulta",
+    "selectService": "Selecione um Serviço",
+    "selectStaff": "Escolha sua Especialista",
+    "selectTime": "Escolha Data e Horário",
+    "payment": "Pagamento",
+    "confirm": "Confirmar Agendamento",
+    "guestEmail": "Seu Endereço de Email",
+    "guestFirstName": "Nome",
+    "guestLastName": "Sobrenome",
+    "guestPhone": "Telefone (opcional)",
+    "couponCode": "Código de Cupom",
+    "applyCoupon": "Aplicar",
+    "reservationExpires": "Seu horário está reservado por {minutes} minutos.",
+    "bookingConfirmed": "Agendamento Confirmado!",
+    "confirmationCode": "Código de Confirmação",
+    "addToCalendar": "Adicionar ao Calendário"
+  },
+  "common": {
+    "loading": "Carregando…",
+    "error": "Algo deu errado.",
+    "retry": "Tentar Novamente",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "close": "Fechar",
+    "submit": "Enviar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "confirm": "Confirmar",
+    "viewAll": "Ver Todos",
+    "learnMore": "Saiba Mais",
+    "bookNow": "Agendar Agora",
+    "required": "Obrigatório"
+  },
+  "errors": {
+    "notFound": "Página não encontrada.",
+    "notFoundDescription": "A página que você procura não existe.",
+    "serverError": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.",
+    "unauthorized": "Você precisa estar logado para ver esta página.",
+    "forbidden": "Você não tem permissão para acessar esta página.",
+    "slotUnavailable": "Este horário não está mais disponível. Por favor, escolha outro.",
+    "paymentFailed": "Seu pagamento não pôde ser processado. Verifique os dados do cartão.",
+    "couponInvalid": "Este código de cupom é inválido ou expirou."
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signOut": "Sair",
+    "signUp": "Criar Conta",
+    "email": "Endereço de Email",
+    "password": "Senha",
+    "forgotPassword": "Esqueceu a senha?",
+    "noAccount": "Não tem uma conta?",
+    "hasAccount": "Já tem uma conta?"
+  },
+  "account": {
+    "title": "Minha Conta",
+    "upcomingAppointments": "Próximos Agendamentos",
+    "pastAppointments": "Agendamentos Passados",
+    "memberships": "Meus Planos",
+    "packages": "Meus Pacotes",
+    "payments": "Histórico de Pagamentos",
+    "preferences": "Preferências de Notificação",
+    "profile": "Perfil"
+  },
+  "services": {
+    "title": "Nossos Serviços",
+    "allCategories": "Todas as Categorias",
+    "noResults": "Nenhum serviço encontrado.",
+    "pricingFrom": "A partir de",
+    "duration": "{minutes} min",
+    "bookService": "Agendar Este Serviço"
+  },
+  "staff": {
+    "title": "Nossas Especialistas",
+    "tier": {
+      "junior": "Especialista Júnior",
+      "senior": "Especialista Sênior",
+      "master": "Especialista Master"
+    },
+    "anyStaff": "Qualquer Especialista Disponível"
+  }
+}

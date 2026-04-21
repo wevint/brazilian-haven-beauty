@@ -70,20 +70,20 @@ Items not covered here require separate specification before task generation.
 
 **⚠️ CRITICAL**: No user story work should begin until this phase is complete.
 
-- [ ] T007 [FOUND] Implement design tokens as CSS variables in `apps/web/app/globals.css` using `specs/tokens.md`
-- [ ] T008 [FOUND] Map approved tokens into Tailwind in `apps/web/tailwind.config.ts`
-- [ ] T009 [P] [FOUND] Create public component primitives in `apps/web/components/public/` for `site-header.tsx`, `hero-section.tsx`, `cta-banner.tsx`, `site-footer.tsx`
-- [ ] T010 [P] [FOUND] Create base app shell and route groups in `apps/web/app/[locale]/(public)/`, `apps/web/app/[locale]/(booking)/`, `apps/web/app/[locale]/(account)/`, `apps/web/app/[locale]/(admin)/`
-- [ ] T011 [P] [FOUND] Create i18n infrastructure in `apps/web/messages/en.json`, `apps/web/messages/pt.json`, `apps/web/middleware.ts`, `apps/web/lib/i18n/`
-- [ ] T012 [P] [FOUND] Create Prisma package scaffolding in `packages/db/package.json`, `packages/db/schema.prisma`, `packages/db/seed.ts`
-- [ ] T013 [FOUND] Implement core enums and shared entities from `data-model.md` in `packages/db/schema.prisma`
-- [ ] T014 [P] [FOUND] Create database client and repository helpers in `packages/db/src/client.ts` and `packages/db/src/repositories/`
-- [ ] T015 [P] [FOUND] Create Auth.js foundation in `apps/web/lib/auth/`, `apps/web/auth.ts`, and role-aware middleware guards
-- [ ] T016 [P] [FOUND] Create tRPC base infrastructure in `packages/trpc/package.json`, `packages/trpc/src/trpc.ts`, `packages/trpc/src/index.ts`, `apps/web/lib/trpc/`
-- [ ] T017 [P] [FOUND] Create payment integration shells in `apps/web/lib/stripe/`, `apps/web/lib/paypal/`, and webhook route placeholders in `apps/web/app/api/webhooks/`
-- [ ] T018 [P] [FOUND] Create background job scaffolding in `apps/web/lib/inngest/` and `apps/web/app/api/inngest/route.ts`
-- [ ] T019 [P] [FOUND] Create email and SMS provider scaffolding in `apps/web/lib/email/`, `apps/web/lib/sms/`, and bilingual template base files
-- [ ] T020 [P] [FOUND] Create observability and error handling setup in `apps/web/lib/observability/`, `apps/web/lib/errors/`, and shared API error formatting
+- [X] T007 [FOUND] Implement design tokens as CSS variables in `apps/web/app/globals.css` using `specs/tokens.md`
+- [X] T008 [FOUND] Map approved tokens into Tailwind in `apps/web/tailwind.config.ts`
+- [X] T009 [P] [FOUND] Create public component primitives in `apps/web/components/public/` for `site-header.tsx`, `hero-section.tsx`, `cta-banner.tsx`, `site-footer.tsx`
+- [X] T010 [P] [FOUND] Create base app shell and route groups in `apps/web/app/[locale]/(public)/`, `apps/web/app/[locale]/(booking)/`, `apps/web/app/[locale]/(account)/`, `apps/web/app/[locale]/(admin)/`
+- [X] T011 [P] [FOUND] Create i18n infrastructure in `apps/web/messages/en.json`, `apps/web/messages/pt.json`, `apps/web/middleware.ts`, `apps/web/lib/i18n/`
+- [X] T012 [P] [FOUND] Create Prisma package scaffolding in `packages/db/package.json`, `packages/db/schema.prisma`, `packages/db/seed.ts`
+- [X] T013 [FOUND] Implement core enums and shared entities from `data-model.md` in `packages/db/schema.prisma`
+- [X] T014 [P] [FOUND] Create database client and repository helpers in `packages/db/src/client.ts` and `packages/db/src/repositories/`
+- [X] T015 [P] [FOUND] Create Auth.js foundation in `apps/web/lib/auth/`, `apps/web/auth.ts`, and role-aware middleware guards
+- [X] T016 [P] [FOUND] Create tRPC base infrastructure in `packages/trpc/package.json`, `packages/trpc/src/trpc.ts`, `packages/trpc/src/index.ts`, `apps/web/lib/trpc/`
+- [X] T017 [P] [FOUND] Create payment integration shells in `apps/web/lib/stripe/`, `apps/web/lib/paypal/`, and webhook route placeholders in `apps/web/app/api/webhooks/`
+- [X] T018 [P] [FOUND] Create background job scaffolding in `apps/web/lib/inngest/` and `apps/web/app/api/inngest/route.ts`
+- [X] T019 [P] [FOUND] Create email and SMS provider scaffolding in `apps/web/lib/email/`, `apps/web/lib/sms/`, and bilingual template base files
+- [X] T020 [P] [FOUND] Create observability and error handling setup in `apps/web/lib/observability/`, `apps/web/lib/errors/`, and shared API error formatting
 
 **Checkpoint**: Foundation complete. User story work can now proceed in priority order.
 

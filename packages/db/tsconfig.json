@@ -1,0 +1,9 @@
+{
+  "extends": "@bhb/config/typescript",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*", "seed.ts"],
+  "exclude": ["node_modules", "dist"]
+}
