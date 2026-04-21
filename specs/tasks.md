@@ -112,11 +112,11 @@ Items not covered here require separate specification before task generation.
 - [ ] T030 [US1] Implement Redis lock and transaction-safe booking reservation flow in `apps/web/lib/booking/lock.ts` and `apps/web/lib/booking/create-booking.ts`
 - [ ] T031 [US1] Implement `services`, `staff`, `availability`, and `bookings` tRPC routers in `packages/trpc/src/routers/services.ts`, `staff.ts`, `appointments.ts`
 - [ ] T032 [P] [US1] Build public service browsing components in `apps/web/components/public/service-category-grid.tsx` and `service-card.tsx`
-- [ ] T033 [P] [US1] Build booking wizard components in `apps/web/components/booking/service-step.tsx`, `staff-step.tsx`, `datetime-step.tsx`, `payment-step.tsx`
-- [ ] T034 [US1] Build Services page in `apps/web/app/[locale]/(public)/services/page.tsx`
-- [ ] T035 [US1] Build Booking page in `apps/web/app/[locale]/(booking)/book/page.tsx`
-- [ ] T036 [US1] Implement booking confirmation email and SMS flow in `apps/web/lib/email/templates/booking-confirmation.tsx`, `apps/web/lib/sms/templates/booking-confirmation.ts`
-- [ ] T037 [US1] Add authenticated account upcoming-booking view in `apps/web/app/[locale]/(account)/account/page.tsx`
+- [X] T033 [P] [US1] Build booking wizard components in `apps/web/components/booking/service-step.tsx`, `staff-step.tsx`, `datetime-step.tsx`, `payment-step.tsx`
+- [X] T034 [US1] Build Services page in `apps/web/app/[locale]/(public)/services/page.tsx`
+- [X] T035 [US1] Build Booking page in `apps/web/app/[locale]/(booking)/book/page.tsx`
+- [X] T036 [US1] Implement booking confirmation email and SMS flow in `apps/web/lib/email/templates/booking-confirmation.tsx`, `apps/web/lib/sms/templates/booking-confirmation.ts`
+- [X] T037 [US1] Add authenticated account upcoming-booking view in `apps/web/app/[locale]/(account)/account/page.tsx`
 
 **Checkpoint**: User Story 1 should be fully functional and demoable as the MVP booking flow.
 
