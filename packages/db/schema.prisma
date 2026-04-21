@@ -1,0 +1,288 @@
+// ============================================================
+// Brazilian Haven Beauty — Prisma Schema
+// ============================================================
+// T012: Scaffolding (datasource, generator, connection config)
+// T013: Core enums + shared entities added below
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================
+// ENUMS  (T013)
+// ============================================================
+
+enum Role {
+  owner
+  manager
+  staff
+}
+
+enum StaffTier {
+  junior
+  senior
+  master
+}
+
+enum ScheduleType {
+  recurring
+  exception
+}
+
+enum AppointmentStatus {
+  scheduled
+  checked_in
+  completed
+  no_show
+  cancelled
+}
+
+enum CancelledBy {
+  client
+  admin
+}
+
+enum WaitlistStatus {
+  waiting
+  notified
+  claimed
+  expired
+}
+
+enum MembershipStatus {
+  active
+  paused
+  cancelled
+  expired
+}
+
+enum BillingCycle {
+  monthly
+  annual
+}
+
+enum ClientPackageStatus {
+  active
+  exhausted
+  expired
+}
+
+enum PaymentGateway {
+  stripe
+  paypal
+  affirm
+}
+
+enum PaymentStatus {
+  pending
+  succeeded
+  failed
+  refunded
+  partially_refunded
+}
+
+enum PaymentMethod {
+  membership_credit
+  package
+  coupon
+  stripe
+  paypal
+}
+
+enum RelatedEntity {
+  appointment
+  membership
+  package
+}
+
+enum DiscountType {
+  percent
+  fixed_usd
+}
+
+enum CouponScope {
+  service
+  package
+  plan
+  order
+}
+
+enum AdCampaignStatus {
+  enabled
+  paused
+  removed
+}
+
+enum NotificationChannel {
+  email
+  sms
+}
+
+enum PreferredLocale {
+  en
+  pt
+}
+
+// ============================================================
+// CORE SHARED ENTITIES  (T013)
+// ============================================================
+
+/// Auth account for admin and staff dashboard access.
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String?
+  role         Role
+  staffId      String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  staff Staff? @relation(fields: [staffId], references: [id])
+
+  @@map("users")
+}
+
+/// A service provider with a profile, seniority tier, and schedule.
+model Staff {
+  id           String    @id @default(uuid())
+  firstName    String
+  lastName     String
+  bio          String?
+  photoUrl     String?
+  specialties  String[]
+  tier         StaffTier
+  isActive     Boolean   @default(true)
+  displayOrder Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user            User?
+  schedules       StaffSchedule[]
+  servicePricings ServicePricing[]
+  appointments    Appointment[]
+
+  @@map("staff")
+}
+
+/// A recurring availability window or one-off exception per staff member.
+model StaffSchedule {
+  id          String       @id @default(uuid())
+  staffId     String
+  type        ScheduleType
+  dayOfWeek   Int?
+  startTime   String
+  endTime     String
+  date        DateTime?    @db.Date
+  isAvailable Boolean      @default(true)
+  note        String?
+
+  staff Staff @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  @@index([staffId])
+  @@map("staff_schedules")
+}
+
+/// A bookable offering with per-staff-tier pricing and durations.
+model Service {
+  id                     String   @id @default(uuid())
+  name                   String
+  nameTranslations       Json
+  description            String
+  descriptionTranslations Json
+  category               String
+  durationMinutes        Int
+  isActive               Boolean  @default(true)
+  allowWaitlist          Boolean  @default(true)
+  displayOrder           Int      @default(0)
+  seoSlug                String   @unique
+  seoMetaDescription     String?
+  jsonLdSchema           Json?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  pricings     ServicePricing[]
+  appointments Appointment[]
+  waitlists    AppointmentWaitlist[]
+
+  @@index([category])
+  @@index([isActive])
+  @@map("services")
+}
+
+/// Join table: (Service × StaffTier) → price and duration.
+model ServicePricing {
+  id              String    @id @default(uuid())
+  serviceId       String
+  staffId         String?
+  staffTier       StaffTier
+  priceUsd        Decimal   @db.Decimal(10, 2)
+  durationMinutes Int
+  isActive        Boolean   @default(true)
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  staff   Staff?  @relation(fields: [staffId], references: [id], onDelete: SetNull)
+
+  @@unique([serviceId, staffTier])
+  @@index([serviceId])
+  @@map("service_pricings")
+}
+
+/// A scheduled appointment for a client with a specific staff member.
+model Appointment {
+  id                   String            @id @default(uuid())
+  clientId             String
+  staffId              String
+  serviceId            String
+  staffTier            StaffTier
+  startAt              DateTime
+  endAt                DateTime
+  status               AppointmentStatus @default(scheduled)
+  priceSnapshotUsd     Decimal           @db.Decimal(10, 2)
+  paymentMethod        PaymentMethod
+  membershipId         String?
+  clientPackageId      String?
+  couponId             String?
+  paymentTransactionId String?
+  cancellationReason   String?
+  cancelledAt          DateTime?
+  cancelledBy          CancelledBy?
+  noShowAt             DateTime?
+  checkInAt            DateTime?
+  completedAt          DateTime?
+  adminNote            String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  staff   Staff   @relation(fields: [staffId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@index([staffId, startAt, endAt])
+  @@index([clientId, startAt(sort: Desc)])
+  @@index([startAt, status])
+  @@map("appointments")
+}
+
+/// Clients waiting for a specific slot to open.
+model AppointmentWaitlist {
+  id             String         @id @default(uuid())
+  clientId       String
+  serviceId      String
+  staffId        String?
+  requestedDate  DateTime       @db.Date
+  notifiedAt     DateTime?
+  claimExpiresAt DateTime?
+  status         WaitlistStatus @default(waiting)
+  createdAt      DateTime       @default(now())
+
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@index([serviceId, staffId, requestedDate, status])
+  @@map("appointment_waitlists")
+}

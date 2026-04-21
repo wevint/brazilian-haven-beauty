@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "prices": "Prices",
+    "booking": "Book Now",
+    "contact": "Contact"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "tagline": "Premium Brazilian waxing and beauty services."
+  },
+  "booking": {
+    "title": "Book an Appointment",
+    "selectService": "Select a Service",
+    "selectStaff": "Select Your Specialist",
+    "selectTime": "Choose Date & Time",
+    "payment": "Payment",
+    "confirm": "Confirm Booking",
+    "guestEmail": "Your Email Address",
+    "guestFirstName": "First Name",
+    "guestLastName": "Last Name",
+    "guestPhone": "Phone Number (optional)",
+    "couponCode": "Coupon Code",
+    "applyCoupon": "Apply",
+    "reservationExpires": "Your slot is reserved for {minutes} minutes.",
+    "bookingConfirmed": "Booking Confirmed!",
+    "confirmationCode": "Confirmation Code",
+    "addToCalendar": "Add to Calendar"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong.",
+    "retry": "Try Again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "submit": "Submit",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "viewAll": "View All",
+    "learnMore": "Learn More",
+    "bookNow": "Book Now",
+    "required": "Required"
+  },
+  "errors": {
+    "notFound": "Page not found.",
+    "notFoundDescription": "The page you are looking for does not exist.",
+    "serverError": "An unexpected error occurred. Please try again later.",
+    "unauthorized": "You must be signed in to view this page.",
+    "forbidden": "You do not have permission to access this page.",
+    "slotUnavailable": "This time slot is no longer available. Please choose another.",
+    "paymentFailed": "Your payment could not be processed. Please check your card details.",
+    "couponInvalid": "This coupon code is invalid or has expired."
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signUp": "Create Account",
+    "email": "Email Address",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "account": {
+    "title": "My Account",
+    "upcomingAppointments": "Upcoming Appointments",
+    "pastAppointments": "Past Appointments",
+    "memberships": "My Memberships",
+    "packages": "My Packages",
+    "payments": "Payment History",
+    "preferences": "Notification Preferences",
+    "profile": "Profile"
+  },
+  "services": {
+    "title": "Our Services",
+    "allCategories": "All Categories",
+    "noResults": "No services found.",
+    "pricingFrom": "From",
+    "duration": "{minutes} min",
+    "bookService": "Book This Service"
+  },
+  "staff": {
+    "title": "Our Specialists",
+    "tier": {
+      "junior": "Junior Specialist",
+      "senior": "Senior Specialist",
+      "master": "Master Specialist"
+    },
+    "anyStaff": "Any Available Specialist"
+  }
+}
