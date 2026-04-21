@@ -105,13 +105,13 @@ Items not covered here require separate specification before task generation.
 
 ### Implementation for User Story 1
 
-- [ ] T026 [P] [US1] Implement service, staff, and service-pricing models in `packages/db/schema.prisma`
-- [ ] T027 [P] [US1] Implement appointment and staff schedule models in `packages/db/schema.prisma`
-- [ ] T028 [US1] Add seed data for services, staff, tiers, and availability in `packages/db/seed.ts`
-- [ ] T029 [US1] Implement booking domain services in `apps/web/lib/booking/pricing.ts`, `apps/web/lib/booking/availability.ts`, `apps/web/lib/booking/reservations.ts`
-- [ ] T030 [US1] Implement Redis lock and transaction-safe booking reservation flow in `apps/web/lib/booking/lock.ts` and `apps/web/lib/booking/create-booking.ts`
-- [ ] T031 [US1] Implement `services`, `staff`, `availability`, and `bookings` tRPC routers in `packages/trpc/src/routers/services.ts`, `staff.ts`, `appointments.ts`
-- [ ] T032 [P] [US1] Build public service browsing components in `apps/web/components/public/service-category-grid.tsx` and `service-card.tsx`
+- [X] T026 [P] [US1] Implement service, staff, and service-pricing models in `packages/db/schema.prisma`
+- [X] T027 [P] [US1] Implement appointment and staff schedule models in `packages/db/schema.prisma`
+- [X] T028 [US1] Add seed data for services, staff, tiers, and availability in `packages/db/seed.ts`
+- [X] T029 [US1] Implement booking domain services in `apps/web/lib/booking/pricing.ts`, `apps/web/lib/booking/availability.ts`, `apps/web/lib/booking/reservations.ts`
+- [X] T030 [US1] Implement Redis lock and transaction-safe booking reservation flow in `apps/web/lib/booking/lock.ts` and `apps/web/lib/booking/create-booking.ts`
+- [X] T031 [US1] Implement `services`, `staff`, `availability`, and `bookings` tRPC routers in `packages/trpc/src/routers/services.ts`, `staff.ts`, `appointments.ts`
+- [X] T032 [P] [US1] Build public service browsing components in `apps/web/components/public/service-category-grid.tsx` and `service-card.tsx`
 - [X] T033 [P] [US1] Build booking wizard components in `apps/web/components/booking/service-step.tsx`, `staff-step.tsx`, `datetime-step.tsx`, `payment-step.tsx`
 - [X] T034 [US1] Build Services page in `apps/web/app/[locale]/(public)/services/page.tsx`
 - [X] T035 [US1] Build Booking page in `apps/web/app/[locale]/(booking)/book/page.tsx`
