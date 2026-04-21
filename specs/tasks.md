@@ -97,11 +97,11 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 1 ⚠️
 
-- [ ] T021 [P] [US1] Write contract tests for `services`, `staff`, `availability`, and `bookings` routers in `tests/contracts/trpc/services.contract.test.ts`
-- [ ] T022 [P] [US1] Write unit tests for pricing resolution and duration lookup in `tests/unit/booking/pricing-resolution.test.ts`
-- [ ] T023 [P] [US1] Write unit tests for availability calculation and double-booking guards in `tests/unit/booking/availability.test.ts`
-- [ ] T024 [P] [US1] Write integration tests for booking creation and slot reservation in `tests/integration/booking/create-booking.test.ts`
-- [ ] T025 [P] [US1] Write Playwright flow for service selection to confirmation in `tests/e2e/booking/first-time-booking.spec.ts`
+- [X] T021 [P] [US1] Write contract tests for `services`, `staff`, `availability`, and `bookings` routers in `tests/contracts/trpc/services.contract.test.ts`
+- [X] T022 [P] [US1] Write unit tests for pricing resolution and duration lookup in `tests/unit/booking/pricing-resolution.test.ts`
+- [X] T023 [P] [US1] Write unit tests for availability calculation and double-booking guards in `tests/unit/booking/availability.test.ts`
+- [X] T024 [P] [US1] Write integration tests for booking creation and slot reservation in `tests/integration/booking/create-booking.test.ts`
+- [X] T025 [P] [US1] Write Playwright flow for service selection to confirmation in `tests/e2e/booking/first-time-booking.spec.ts`
 
 ### Implementation for User Story 1
 
