@@ -1,22 +1,18 @@
-import { createTRPCRouter } from "../trpc";
-
 /**
- * Application root router.
- *
- * Sub-routers are added here as user stories are implemented:
- * - services  (US1, T031)
- * - staff     (US1, T031)
- * - appointments (US1, T031)
- * - memberships  (US4, T070)
- * - packages     (US5, T080)
- * - coupons      (US6, T090)
- * - clients      (US2, T043)
- * - payments     (US3, T059)
- * - waitlist     (US7, T097)
- * - admin        (US2, T043)
+ * Root tRPC app router – registers all sub-routers.
  */
-export const appRouter = createTRPCRouter({
-  // Routers will be added here per user story.
+
+import { router } from "../trpc";
+import { servicesRouter } from "./services";
+import { staffRouter } from "./staff";
+import { availabilityRouter } from "./availability";
+import { appointmentsRouter } from "./appointments";
+
+export const appRouter = router({
+  services: servicesRouter,
+  staff: staffRouter,
+  availability: availabilityRouter,
+  appointments: appointmentsRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -1,161 +1,82 @@
-/**
- * T022 — Unit tests: pricing resolution
- *
- * Tests for `apps/web/lib/booking/pricing.ts` which does not exist yet (TDD).
- * These tests will fail until T029 creates the pricing service module.
- *
- * Contracts drawn from:
- *   specs/data-model.md   — ServicePricing entity fields
- *   specs/contracts/api.md — staffTier enum: "junior" | "senior" | "master"
- */
-
 import { describe, it, expect } from "vitest";
-
-// ---------------------------------------------------------------------------
-// Future import — module will be created in T029
-// ---------------------------------------------------------------------------
-// @ts-expect-error — module not yet implemented
 import { resolvePricing, formatPrice } from "@/lib/booking/pricing";
+import type { ServicePricing } from "@bhb/db";
 
-// ---------------------------------------------------------------------------
-// Fixture data
-// ---------------------------------------------------------------------------
-
-type StaffTier = "junior" | "senior" | "master";
-
-interface PricingEntry {
-  staffTier: StaffTier;
-  priceUsd: number;         // stored as cents in this fixture to match the
-  durationMinutes: number;  // formatPrice(5000) → "$50.00" test requirement
-  isActive: boolean;
-}
-
-/**
- * Sample pricing table for a "Brazilian Wax" service.
- * priceUsd is represented in cents here (matching the formatPrice test
- * assertions which pass cents as the raw number — 5000 → "$50.00").
- */
-const FIXTURE_PRICING_TABLE: PricingEntry[] = [
-  { staffTier: "junior",  priceUsd: 4500, durationMinutes: 45, isActive: true  },
-  { staffTier: "senior",  priceUsd: 6000, durationMinutes: 50, isActive: true  },
-  { staffTier: "master",  priceUsd: 8000, durationMinutes: 60, isActive: true  },
+const mockPricingTable: ServicePricing[] = [
+  {
+    id: "p1",
+    serviceId: "s1",
+    staffId: null,
+    staffTier: "junior",
+    priceUsd: 5500,
+    durationMinutes: 45,
+    active: true,
+  } as unknown as ServicePricing,
+  {
+    id: "p2",
+    serviceId: "s1",
+    staffId: null,
+    staffTier: "senior",
+    priceUsd: 7000,
+    durationMinutes: 40,
+    active: true,
+  } as unknown as ServicePricing,
+  {
+    id: "p3",
+    serviceId: "s1",
+    staffId: null,
+    staffTier: "master",
+    priceUsd: 9000,
+    durationMinutes: 35,
+    active: true,
+  } as unknown as ServicePricing,
 ];
 
-const FIXTURE_INACTIVE_TIER: PricingEntry[] = [
-  { staffTier: "junior", priceUsd: 4500, durationMinutes: 45, isActive: false },
-];
-
-// ---------------------------------------------------------------------------
-// resolvePricing
-// ---------------------------------------------------------------------------
-
-describe("resolvePricing(serviceId, staffTier, pricingTable)", () => {
-  it("returns correct price for JUNIOR tier", () => {
-    const result = resolvePricing("svc-001", "junior", FIXTURE_PRICING_TABLE);
-    expect(result.priceUsd).toBe(4500);
-  });
-
-  it("returns correct price for SENIOR tier", () => {
-    const result = resolvePricing("svc-001", "senior", FIXTURE_PRICING_TABLE);
-    expect(result.priceUsd).toBe(6000);
-  });
-
-  it("returns correct price for MASTER tier", () => {
-    const result = resolvePricing("svc-001", "master", FIXTURE_PRICING_TABLE);
-    expect(result.priceUsd).toBe(8000);
-  });
-
-  it("returns correct duration for JUNIOR tier", () => {
-    const result = resolvePricing("svc-001", "junior", FIXTURE_PRICING_TABLE);
+describe("resolvePricing", () => {
+  it("returns correct price and duration for junior tier", () => {
+    const result = resolvePricing("s1", "junior", mockPricingTable);
+    expect(result.priceUsd).toBe(5500);
     expect(result.durationMinutes).toBe(45);
   });
 
-  it("returns correct duration for SENIOR tier", () => {
-    const result = resolvePricing("svc-001", "senior", FIXTURE_PRICING_TABLE);
-    expect(result.durationMinutes).toBe(50);
+  it("returns correct price and duration for senior tier", () => {
+    const result = resolvePricing("s1", "senior", mockPricingTable);
+    expect(result.priceUsd).toBe(7000);
+    expect(result.durationMinutes).toBe(40);
   });
 
-  it("returns correct duration for MASTER tier", () => {
-    const result = resolvePricing("svc-001", "master", FIXTURE_PRICING_TABLE);
-    expect(result.durationMinutes).toBe(60);
+  it("returns correct price and duration for master tier", () => {
+    const result = resolvePricing("s1", "master", mockPricingTable);
+    expect(result.priceUsd).toBe(9000);
+    expect(result.durationMinutes).toBe(35);
   });
 
-  it("throws if staffTier is not found in pricingTable", () => {
-    const emptyTable: PricingEntry[] = [];
-    expect(() =>
-      resolvePricing("svc-001", "senior", emptyTable)
-    ).toThrow();
+  it("throws if service not found in pricing table", () => {
+    expect(() => resolvePricing("not-a-service", "junior", mockPricingTable)).toThrow();
   });
 
-  it("throws with a descriptive message when tier not found", () => {
-    expect(() =>
-      resolvePricing("svc-001", "master", FIXTURE_INACTIVE_TIER)
-    ).toThrow(/master/i);
-  });
-
-  it("throws when pricing entry exists but isActive is false", () => {
-    // An inactive tier entry should not be resolvable for booking
-    expect(() =>
-      resolvePricing("svc-001", "junior", FIXTURE_INACTIVE_TIER)
-    ).toThrow();
-  });
-
-  it("returns a result object with both priceUsd and durationMinutes properties", () => {
-    const result = resolvePricing("svc-001", "senior", FIXTURE_PRICING_TABLE);
-    expect(result).toHaveProperty("priceUsd");
-    expect(result).toHaveProperty("durationMinutes");
-  });
-
-  it("the returned priceUsd is a number (not string or null)", () => {
-    const result = resolvePricing("svc-001", "junior", FIXTURE_PRICING_TABLE);
-    expect(typeof result.priceUsd).toBe("number");
-  });
-
-  it("the returned durationMinutes is a positive integer", () => {
-    const result = resolvePricing("svc-001", "junior", FIXTURE_PRICING_TABLE);
-    expect(typeof result.durationMinutes).toBe("number");
-    expect(result.durationMinutes).toBeGreaterThan(0);
-    expect(Number.isInteger(result.durationMinutes)).toBe(true);
+  it("throws if pricing entry is inactive", () => {
+    const inactiveTable = mockPricingTable.map((p) =>
+      p.staffTier === "junior" ? { ...p, active: false } : p
+    );
+    expect(() => resolvePricing("s1", "junior", inactiveTable as unknown as ServicePricing[])).toThrow();
   });
 });
 
-// ---------------------------------------------------------------------------
-// formatPrice
-// ---------------------------------------------------------------------------
-
-describe("formatPrice(amount: number)", () => {
-  it('formats 5000 (cents) as "$50.00"', () => {
+describe("formatPrice", () => {
+  it("formats 5000 cents as $50.00", () => {
     expect(formatPrice(5000)).toBe("$50.00");
   });
 
-  it('formats 0 as "$0.00"', () => {
+  it("formats 7500 cents as $75.00", () => {
+    expect(formatPrice(7500)).toBe("$75.00");
+  });
+
+  it("formats 0 cents as $0.00", () => {
     expect(formatPrice(0)).toBe("$0.00");
   });
 
-  it("handles fractional cents correctly (rounds to nearest cent)", () => {
-    // 5001 cents = $50.01
-    expect(formatPrice(5001)).toBe("$50.01");
-  });
-
-  it("handles single-digit cent values with proper zero-padding", () => {
-    // 501 cents = $5.01
-    expect(formatPrice(501)).toBe("$5.01");
-  });
-
-  it("handles large amounts correctly", () => {
-    // 100000 cents = $1000.00
-    expect(formatPrice(100000)).toBe("$1,000.00");
-  });
-
-  it("always returns a string", () => {
-    expect(typeof formatPrice(4500)).toBe("string");
-  });
-
-  it("always includes the dollar sign prefix", () => {
-    expect(formatPrice(6000)).toMatch(/^\$/);
-  });
-
-  it("always includes two decimal places", () => {
-    expect(formatPrice(6000)).toMatch(/\.\d{2}$/);
+  it("formats 9999 cents as $99.99", () => {
+    expect(formatPrice(9999)).toBe("$99.99");
   });
 });

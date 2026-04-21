@@ -1,10 +1,4 @@
-export { appRouter, type AppRouter } from "./routers/index";
-export {
-  createCallerFactory,
-  createTRPCRouter,
-  baseProcedure,
-  protectedProcedure,
-  adminProcedure,
-  ownerProcedure,
-  type TRPCContext,
-} from "./trpc";
+export { appRouter } from "./routers/index";
+export type { AppRouter } from "./routers/index";
+export { router, publicProcedure, protectedProcedure, adminProcedure } from "./trpc";
+export type { TRPCContext } from "./trpc";
