@@ -188,10 +188,10 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 4 ⚠️
 
-- [ ] T064 [P] [US4] Write contract tests for memberships and plans in `tests/contracts/trpc/memberships.contract.test.ts`
-- [ ] T065 [P] [US4] Write unit tests for credit consumption and tier-difference charging in `tests/unit/memberships/credit-consumption.test.ts`
-- [ ] T066 [P] [US4] Write integration tests for renewal and credit issuance in `tests/integration/memberships/renewal.test.ts`
-- [ ] T067 [P] [US4] Write Playwright membership purchase flow in `tests/e2e/memberships/signup-and-book.spec.ts`
+- [X] T064 [P] [US4] Write contract tests for memberships and plans in `tests/contracts/trpc/memberships.contract.test.ts`
+- [X] T065 [P] [US4] Write unit tests for credit consumption and tier-difference charging in `tests/unit/memberships/credit-consumption.test.ts`
+- [X] T066 [P] [US4] Write integration tests for renewal and credit issuance in `tests/integration/memberships/renewal.test.ts`
+- [X] T067 [P] [US4] Write Playwright membership purchase flow in `tests/e2e/memberships/signup-and-book.spec.ts`
 
 ### Implementation for User Story 4
 
