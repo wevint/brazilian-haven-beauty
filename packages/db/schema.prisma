@@ -1,0 +1,249 @@
+// Brazilian Haven Beauty – Prisma Schema
+// Covers: User, Staff, Service, ServicePricing, StaffSchedule,
+//         Appointment, AppointmentWaitlist
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────
+
+enum UserRole {
+  owner
+  manager
+  staff
+}
+
+enum StaffTier {
+  junior
+  senior
+  master
+}
+
+enum AppointmentStatus {
+  scheduled
+  checked_in
+  completed
+  no_show
+  cancelled
+}
+
+enum WaitlistStatus {
+  waiting
+  notified
+  claimed
+  expired
+}
+
+enum PaymentGateway {
+  stripe
+  paypal
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded
+}
+
+// ─────────────────────────────────────────────
+// User (Auth account for staff / admin dashboard)
+// ─────────────────────────────────────────────
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String?
+  role         UserRole  @default(staff)
+  staffId      String?   @unique
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  staff               Staff?               @relation(fields: [staffId], references: [id])
+  savedPaymentMethods SavedPaymentMethod[]
+}
+
+// ─────────────────────────────────────────────
+// Staff
+// ─────────────────────────────────────────────
+
+model Staff {
+  id           String    @id @default(uuid())
+  userId       String?   @unique
+  firstName    String
+  lastName     String
+  bio          String?
+  photoUrl     String?
+  tier         StaffTier @default(junior)
+  isActive     Boolean   @default(true)
+  specialties  String[]
+  displayOrder Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  user         User?
+  schedules    StaffSchedule[]
+  appointments Appointment[]
+  pricing      ServicePricing[]
+}
+
+// ─────────────────────────────────────────────
+// StaffSchedule – recurring weekly windows
+// ─────────────────────────────────────────────
+
+model StaffSchedule {
+  id         String   @id @default(uuid())
+  staffId    String
+  dayOfWeek  Int      // 0=Sun … 6=Sat
+  startTime  String   // "HH:MM"
+  endTime    String   // "HH:MM"
+  timezone   String   @default("America/New_York")
+
+  staff      Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  @@unique([staffId, dayOfWeek])
+}
+
+// ─────────────────────────────────────────────
+// Service
+// ─────────────────────────────────────────────
+
+model Service {
+  id                     String    @id @default(uuid())
+  name                   String
+  nameTranslations       Json      // { en: string, pt: string }
+  slug                   String    @unique
+  description            String    @default("")
+  descriptionTranslations Json     // { en: string, pt: string }
+  category               String
+  imageUrl               String?
+  active                 Boolean   @default(true)
+  allowWaitlist          Boolean   @default(true)
+  displayOrder           Int       @default(0)
+  seoMetaDescription     String?
+  jsonLdSchema           Json?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  pricing                ServicePricing[]
+  appointments           Appointment[]
+  waitlist               AppointmentWaitlist[]
+}
+
+// ─────────────────────────────────────────────
+// ServicePricing – (service × staffTier) price
+// ─────────────────────────────────────────────
+
+model ServicePricing {
+  id              String    @id @default(uuid())
+  serviceId       String
+  staffId         String?   // optional staff override; tier-level pricing when null
+  staffTier       StaffTier
+  priceUsd        Int       // stored in cents (e.g. 5000 = $50.00)
+  durationMinutes Int
+  active          Boolean   @default(true)
+
+  service         Service   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  staff           Staff?    @relation(fields: [staffId], references: [id])
+
+  @@unique([serviceId, staffTier])
+  @@index([serviceId, staffTier])
+}
+
+// ─────────────────────────────────────────────
+// Appointment
+// ─────────────────────────────────────────────
+
+model Appointment {
+  id               String            @id @default(uuid())
+  clientId         String
+  staffId          String
+  serviceId        String
+  staffTier        StaffTier
+  priceUsd         Int               // cents snapshot at booking time
+  durationMinutes  Int
+  startAt          DateTime
+  endAt            DateTime
+  status           AppointmentStatus @default(scheduled)
+  paymentStatus    PaymentStatus?
+  confirmationCode String            @unique
+  notes            String?
+  paymentIntentId  String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  staff               Staff                @relation(fields: [staffId], references: [id])
+  service             Service              @relation(fields: [serviceId], references: [id])
+  paymentTransactions PaymentTransaction[]
+
+  @@index([staffId, startAt])
+  @@index([clientId, status])
+  @@index([startAt, status])
+}
+
+// ─────────────────────────────────────────────
+// AppointmentWaitlist
+// ─────────────────────────────────────────────
+
+model AppointmentWaitlist {
+  id            String         @id @default(uuid())
+  clientId      String
+  serviceId     String
+  staffId       String?
+  requestedDate DateTime
+  status        WaitlistStatus @default(waiting)
+  notifiedAt    DateTime?
+  createdAt     DateTime       @default(now())
+
+  service       Service        @relation(fields: [serviceId], references: [id])
+
+  @@index([serviceId, staffId, requestedDate, status])
+}
+
+// ─────────────────────────────────────────────
+// PaymentTransaction – PCI-SAQ-A compliant payment record
+// Stores only gateway tokens and last4/brand — never raw card data
+// ─────────────────────────────────────────────
+
+model PaymentTransaction {
+  id                    String         @id @default(cuid())
+  appointmentId         String
+  appointment           Appointment    @relation(fields: [appointmentId], references: [id])
+  gateway               PaymentGateway
+  stripePaymentIntentId String?
+  paypalOrderId         String?
+  amountUsd             Int            // cents
+  status                PaymentStatus
+  last4                 String?
+  brand                 String?
+  refundId              String?
+  refundReason          String?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+}
+
+// ─────────────────────────────────────────────
+// SavedPaymentMethod – tokenized card reference only
+// Never stores raw card data (PCI-SAQ-A)
+// ─────────────────────────────────────────────
+
+model SavedPaymentMethod {
+  id                    String         @id @default(cuid())
+  userId                String
+  user                  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gateway               PaymentGateway
+  stripeCustomerId      String?
+  stripePaymentMethodId String?
+  last4                 String
+  brand                 String
+  isDefault             Boolean        @default(false)
+  createdAt             DateTime       @default(now())
+}

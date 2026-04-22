@@ -55,12 +55,12 @@ Items not covered here require separate specification before task generation.
 
 **Purpose**: Initialize the monorepo, tooling, and baseline quality gates.
 
-- [ ] T001 [SETUP] Create workspace root files `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.gitignore`, `.editorconfig`, `.npmrc`
-- [ ] T002 [P] [SETUP] Create shared config package scaffolding in `packages/config/package.json`, `packages/config/tsconfig.base.json`, `packages/config/eslint/`, `packages/config/prettier/`
-- [ ] T003 [P] [SETUP] Create web app scaffolding in `apps/web/package.json`, `apps/web/tsconfig.json`, `apps/web/next.config.ts`, `apps/web/postcss.config.js`
-- [ ] T004 [P] [SETUP] Create shared test and CI scaffolding in `vitest.config.ts`, `playwright.config.ts`, `.github/workflows/ci.yml`
-- [ ] T005 [SETUP] Create root scripts for `lint`, `typecheck`, `test`, `e2e`, `build`, and `dev` in `package.json`
-- [ ] T006 [P] [SETUP] Create environment templates in `apps/web/.env.example` and `tools/google-ads-cli/.env.example`
+- [X] T001 [SETUP] Create workspace root files `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.gitignore`, `.editorconfig`, `.npmrc`
+- [X] T002 [P] [SETUP] Create shared config package scaffolding in `packages/config/package.json`, `packages/config/tsconfig.base.json`, `packages/config/eslint/`, `packages/config/prettier/`
+- [X] T003 [P] [SETUP] Create web app scaffolding in `apps/web/package.json`, `apps/web/tsconfig.json`, `apps/web/next.config.ts`, `apps/web/postcss.config.js`
+- [X] T004 [P] [SETUP] Create shared test and CI scaffolding in `vitest.config.ts`, `playwright.config.ts`, `.github/workflows/ci.yml`
+- [X] T005 [SETUP] Create root scripts for `lint`, `typecheck`, `test`, `e2e`, `build`, and `dev` in `package.json`
+- [X] T006 [P] [SETUP] Create environment templates in `apps/web/.env.example` and `tools/google-ads-cli/.env.example`
 
 ---
 
@@ -70,20 +70,20 @@ Items not covered here require separate specification before task generation.
 
 **⚠️ CRITICAL**: No user story work should begin until this phase is complete.
 
-- [ ] T007 [FOUND] Implement design tokens as CSS variables in `apps/web/app/globals.css` using `specs/tokens.md`
-- [ ] T008 [FOUND] Map approved tokens into Tailwind in `apps/web/tailwind.config.ts`
-- [ ] T009 [P] [FOUND] Create public component primitives in `apps/web/components/public/` for `site-header.tsx`, `hero-section.tsx`, `cta-banner.tsx`, `site-footer.tsx`
-- [ ] T010 [P] [FOUND] Create base app shell and route groups in `apps/web/app/[locale]/(public)/`, `apps/web/app/[locale]/(booking)/`, `apps/web/app/[locale]/(account)/`, `apps/web/app/[locale]/(admin)/`
-- [ ] T011 [P] [FOUND] Create i18n infrastructure in `apps/web/messages/en.json`, `apps/web/messages/pt.json`, `apps/web/middleware.ts`, `apps/web/lib/i18n/`
-- [ ] T012 [P] [FOUND] Create Prisma package scaffolding in `packages/db/package.json`, `packages/db/schema.prisma`, `packages/db/seed.ts`
-- [ ] T013 [FOUND] Implement core enums and shared entities from `data-model.md` in `packages/db/schema.prisma`
-- [ ] T014 [P] [FOUND] Create database client and repository helpers in `packages/db/src/client.ts` and `packages/db/src/repositories/`
-- [ ] T015 [P] [FOUND] Create Auth.js foundation in `apps/web/lib/auth/`, `apps/web/auth.ts`, and role-aware middleware guards
-- [ ] T016 [P] [FOUND] Create tRPC base infrastructure in `packages/trpc/package.json`, `packages/trpc/src/trpc.ts`, `packages/trpc/src/index.ts`, `apps/web/lib/trpc/`
-- [ ] T017 [P] [FOUND] Create payment integration shells in `apps/web/lib/stripe/`, `apps/web/lib/paypal/`, and webhook route placeholders in `apps/web/app/api/webhooks/`
-- [ ] T018 [P] [FOUND] Create background job scaffolding in `apps/web/lib/inngest/` and `apps/web/app/api/inngest/route.ts`
-- [ ] T019 [P] [FOUND] Create email and SMS provider scaffolding in `apps/web/lib/email/`, `apps/web/lib/sms/`, and bilingual template base files
-- [ ] T020 [P] [FOUND] Create observability and error handling setup in `apps/web/lib/observability/`, `apps/web/lib/errors/`, and shared API error formatting
+- [X] T007 [FOUND] Implement design tokens as CSS variables in `apps/web/app/globals.css` using `specs/tokens.md`
+- [X] T008 [FOUND] Map approved tokens into Tailwind in `apps/web/tailwind.config.ts`
+- [X] T009 [P] [FOUND] Create public component primitives in `apps/web/components/public/` for `site-header.tsx`, `hero-section.tsx`, `cta-banner.tsx`, `site-footer.tsx`
+- [X] T010 [P] [FOUND] Create base app shell and route groups in `apps/web/app/[locale]/(public)/`, `apps/web/app/[locale]/(booking)/`, `apps/web/app/[locale]/(account)/`, `apps/web/app/[locale]/(admin)/`
+- [X] T011 [P] [FOUND] Create i18n infrastructure in `apps/web/messages/en.json`, `apps/web/messages/pt.json`, `apps/web/middleware.ts`, `apps/web/lib/i18n/`
+- [X] T012 [P] [FOUND] Create Prisma package scaffolding in `packages/db/package.json`, `packages/db/schema.prisma`, `packages/db/seed.ts`
+- [X] T013 [FOUND] Implement core enums and shared entities from `data-model.md` in `packages/db/schema.prisma`
+- [X] T014 [P] [FOUND] Create database client and repository helpers in `packages/db/src/client.ts` and `packages/db/src/repositories/`
+- [X] T015 [P] [FOUND] Create Auth.js foundation in `apps/web/lib/auth/`, `apps/web/auth.ts`, and role-aware middleware guards
+- [X] T016 [P] [FOUND] Create tRPC base infrastructure in `packages/trpc/package.json`, `packages/trpc/src/trpc.ts`, `packages/trpc/src/index.ts`, `apps/web/lib/trpc/`
+- [X] T017 [P] [FOUND] Create payment integration shells in `apps/web/lib/stripe/`, `apps/web/lib/paypal/`, and webhook route placeholders in `apps/web/app/api/webhooks/`
+- [X] T018 [P] [FOUND] Create background job scaffolding in `apps/web/lib/inngest/` and `apps/web/app/api/inngest/route.ts`
+- [X] T019 [P] [FOUND] Create email and SMS provider scaffolding in `apps/web/lib/email/`, `apps/web/lib/sms/`, and bilingual template base files
+- [X] T020 [P] [FOUND] Create observability and error handling setup in `apps/web/lib/observability/`, `apps/web/lib/errors/`, and shared API error formatting
 
 **Checkpoint**: Foundation complete. User story work can now proceed in priority order.
 
@@ -97,26 +97,26 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 1 ⚠️
 
-- [ ] T021 [P] [US1] Write contract tests for `services`, `staff`, `availability`, and `bookings` routers in `tests/contracts/trpc/services.contract.test.ts`
-- [ ] T022 [P] [US1] Write unit tests for pricing resolution and duration lookup in `tests/unit/booking/pricing-resolution.test.ts`
-- [ ] T023 [P] [US1] Write unit tests for availability calculation and double-booking guards in `tests/unit/booking/availability.test.ts`
-- [ ] T024 [P] [US1] Write integration tests for booking creation and slot reservation in `tests/integration/booking/create-booking.test.ts`
-- [ ] T025 [P] [US1] Write Playwright flow for service selection to confirmation in `tests/e2e/booking/first-time-booking.spec.ts`
+- [X] T021 [P] [US1] Write contract tests for `services`, `staff`, `availability`, and `bookings` routers in `tests/contracts/trpc/services.contract.test.ts`
+- [X] T022 [P] [US1] Write unit tests for pricing resolution and duration lookup in `tests/unit/booking/pricing-resolution.test.ts`
+- [X] T023 [P] [US1] Write unit tests for availability calculation and double-booking guards in `tests/unit/booking/availability.test.ts`
+- [X] T024 [P] [US1] Write integration tests for booking creation and slot reservation in `tests/integration/booking/create-booking.test.ts`
+- [X] T025 [P] [US1] Write Playwright flow for service selection to confirmation in `tests/e2e/booking/first-time-booking.spec.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T026 [P] [US1] Implement service, staff, and service-pricing models in `packages/db/schema.prisma`
-- [ ] T027 [P] [US1] Implement appointment and staff schedule models in `packages/db/schema.prisma`
-- [ ] T028 [US1] Add seed data for services, staff, tiers, and availability in `packages/db/seed.ts`
-- [ ] T029 [US1] Implement booking domain services in `apps/web/lib/booking/pricing.ts`, `apps/web/lib/booking/availability.ts`, `apps/web/lib/booking/reservations.ts`
-- [ ] T030 [US1] Implement Redis lock and transaction-safe booking reservation flow in `apps/web/lib/booking/lock.ts` and `apps/web/lib/booking/create-booking.ts`
-- [ ] T031 [US1] Implement `services`, `staff`, `availability`, and `bookings` tRPC routers in `packages/trpc/src/routers/services.ts`, `staff.ts`, `appointments.ts`
-- [ ] T032 [P] [US1] Build public service browsing components in `apps/web/components/public/service-category-grid.tsx` and `service-card.tsx`
-- [ ] T033 [P] [US1] Build booking wizard components in `apps/web/components/booking/service-step.tsx`, `staff-step.tsx`, `datetime-step.tsx`, `payment-step.tsx`
-- [ ] T034 [US1] Build Services page in `apps/web/app/[locale]/(public)/services/page.tsx`
-- [ ] T035 [US1] Build Booking page in `apps/web/app/[locale]/(booking)/book/page.tsx`
-- [ ] T036 [US1] Implement booking confirmation email and SMS flow in `apps/web/lib/email/templates/booking-confirmation.tsx`, `apps/web/lib/sms/templates/booking-confirmation.ts`
-- [ ] T037 [US1] Add authenticated account upcoming-booking view in `apps/web/app/[locale]/(account)/account/page.tsx`
+- [X] T026 [P] [US1] Implement service, staff, and service-pricing models in `packages/db/schema.prisma`
+- [X] T027 [P] [US1] Implement appointment and staff schedule models in `packages/db/schema.prisma`
+- [X] T028 [US1] Add seed data for services, staff, tiers, and availability in `packages/db/seed.ts`
+- [X] T029 [US1] Implement booking domain services in `apps/web/lib/booking/pricing.ts`, `apps/web/lib/booking/availability.ts`, `apps/web/lib/booking/reservations.ts`
+- [X] T030 [US1] Implement Redis lock and transaction-safe booking reservation flow in `apps/web/lib/booking/lock.ts` and `apps/web/lib/booking/create-booking.ts`
+- [X] T031 [US1] Implement `services`, `staff`, `availability`, and `bookings` tRPC routers in `packages/trpc/src/routers/services.ts`, `staff.ts`, `appointments.ts`
+- [X] T032 [P] [US1] Build public service browsing components in `apps/web/components/public/service-category-grid.tsx` and `service-card.tsx`
+- [X] T033 [P] [US1] Build booking wizard components in `apps/web/components/booking/service-step.tsx`, `staff-step.tsx`, `datetime-step.tsx`, `payment-step.tsx`
+- [X] T034 [US1] Build Services page in `apps/web/app/[locale]/(public)/services/page.tsx`
+- [X] T035 [US1] Build Booking page in `apps/web/app/[locale]/(booking)/book/page.tsx`
+- [X] T036 [US1] Implement booking confirmation email and SMS flow in `apps/web/lib/email/templates/booking-confirmation.tsx`, `apps/web/lib/sms/templates/booking-confirmation.ts`
+- [X] T037 [US1] Add authenticated account upcoming-booking view in `apps/web/app/[locale]/(account)/account/page.tsx`
 
 **Checkpoint**: User Story 1 should be fully functional and demoable as the MVP booking flow.
 
@@ -130,23 +130,23 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T038 [P] [US2] Write contract tests for admin, appointments, services, and staff routers in `tests/contracts/trpc/admin.contract.test.ts`
-- [ ] T039 [P] [US2] Write integration tests for drag-reschedule and conflict handling in `tests/integration/admin/reschedule-appointment.test.ts`
-- [ ] T040 [P] [US2] Write integration tests for service pricing updates in `tests/integration/admin/update-service-pricing.test.ts`
-- [ ] T041 [P] [US2] Write Playwright admin flow for dashboard and calendar operations in `tests/e2e/admin/daily-operations.spec.ts`
+- [X] T038 [P] [US2] Write contract tests for admin, appointments, services, and staff routers in `tests/contracts/trpc/admin.contract.test.ts`
+- [X] T039 [P] [US2] Write integration tests for drag-reschedule and conflict handling in `tests/integration/admin/reschedule-appointment.test.ts`
+- [X] T040 [P] [US2] Write integration tests for service pricing updates in `tests/integration/admin/update-service-pricing.test.ts`
+- [X] T041 [P] [US2] Write Playwright admin flow for dashboard and calendar operations in `tests/e2e/admin/daily-operations.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T042 [US2] Implement admin role policy helpers in `apps/web/lib/auth/roles.ts`
-- [ ] T043 [US2] Implement admin-facing appointment, staff, and service routers in `packages/trpc/src/routers/admin.ts`, `appointments.ts`, `staff.ts`, `services.ts`
-- [ ] T044 [P] [US2] Build admin layout and navigation in `apps/web/app/[locale]/(admin)/admin/layout.tsx` and `apps/web/components/admin/admin-sidebar.tsx`
-- [ ] T045 [P] [US2] Build KPI and operational widgets in `apps/web/components/admin/kpi-cards.tsx` and `daily-summary.tsx`
-- [ ] T046 [P] [US2] Build calendar integration in `apps/web/components/admin/calendar/day-calendar.tsx`
-- [ ] T047 [P] [US2] Build service management table and form in `apps/web/components/admin/services/services-table.tsx` and `service-form.tsx`
-- [ ] T048 [P] [US2] Build staff management table and form in `apps/web/components/admin/staff/staff-table.tsx` and `staff-form.tsx`
-- [ ] T049 [US2] Implement admin dashboard page in `apps/web/app/[locale]/(admin)/admin/page.tsx`
-- [ ] T050 [US2] Implement appointment management page in `apps/web/app/[locale]/(admin)/admin/appointments/page.tsx`
-- [ ] T051 [US2] Implement services and staff pages in `apps/web/app/[locale]/(admin)/admin/services/page.tsx` and `staff/page.tsx`
+- [X] T042 [US2] Implement admin role policy helpers in `apps/web/lib/auth/roles.ts`
+- [X] T043 [US2] Implement admin-facing appointment, staff, and service routers in `packages/trpc/src/routers/admin.ts`, `appointments.ts`, `staff.ts`, `services.ts`
+- [X] T044 [P] [US2] Build admin layout and navigation in `apps/web/app/[locale]/(admin)/admin/layout.tsx` and `apps/web/components/admin/admin-sidebar.tsx`
+- [X] T045 [P] [US2] Build KPI and operational widgets in `apps/web/components/admin/kpi-cards.tsx` and `daily-summary.tsx`
+- [X] T046 [P] [US2] Build calendar integration in `apps/web/components/admin/calendar/day-calendar.tsx`
+- [X] T047 [P] [US2] Build service management table and form in `apps/web/components/admin/services/services-table.tsx` and `service-form.tsx`
+- [X] T048 [P] [US2] Build staff management table and form in `apps/web/components/admin/staff/staff-table.tsx` and `staff-form.tsx`
+- [X] T049 [US2] Implement admin dashboard page in `apps/web/app/[locale]/(admin)/admin/page.tsx`
+- [X] T050 [US2] Implement appointment management page in `apps/web/app/[locale]/(admin)/admin/appointments/page.tsx`
+- [X] T051 [US2] Implement services and staff pages in `apps/web/app/[locale]/(admin)/admin/services/page.tsx` and `staff/page.tsx`
 
 **Checkpoint**: Admin users can operate day-to-day scheduling and pricing without Vagaro.
 
@@ -160,21 +160,21 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T052 [P] [US3] Write contract tests for payment and webhook endpoints in `tests/contracts/http/payments.contract.test.ts`
-- [ ] T053 [P] [US3] Write unit tests verifying payment metadata storage constraints in `tests/unit/payments/payment-storage-guards.test.ts`
-- [ ] T054 [P] [US3] Write integration tests for Stripe and PayPal success/failure webhook handling in `tests/integration/payments/webhooks.test.ts`
-- [ ] T055 [P] [US3] Write Playwright payment flow tests in `tests/e2e/payments/checkout-and-confirmation.spec.ts`
+- [X] T052 [P] [US3] Write contract tests for payment and webhook endpoints in `tests/contracts/http/payments.contract.test.ts`
+- [X] T053 [P] [US3] Write unit tests verifying payment metadata storage constraints in `tests/unit/payments/payment-storage-guards.test.ts`
+- [X] T054 [P] [US3] Write integration tests for Stripe and PayPal success/failure webhook handling in `tests/integration/payments/webhooks.test.ts`
+- [X] T055 [P] [US3] Write Playwright payment flow tests in `tests/e2e/payments/checkout-and-confirmation.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T056 [US3] Implement payment transaction and saved payment method models in `packages/db/schema.prisma`
-- [ ] T057 [US3] Implement Stripe payment intent, setup intent, and refund helpers in `apps/web/lib/stripe/payment-intents.ts`, `setup-intents.ts`, `refunds.ts`
-- [ ] T058 [US3] Implement PayPal order helpers in `apps/web/lib/paypal/orders.ts`
-- [ ] T059 [US3] Implement payment and refund tRPC routers in `packages/trpc/src/routers/payments.ts`
-- [ ] T060 [US3] Implement Stripe and PayPal webhook routes in `apps/web/app/api/webhooks/stripe/route.ts` and `paypal/route.ts`
-- [ ] T061 [US3] Implement saved payment method account management in `apps/web/app/[locale]/(account)/account/payments/page.tsx`
-- [ ] T062 [US3] Implement admin refund UI in `apps/web/components/admin/payments/refund-panel.tsx`
-- [ ] T063 [US3] Add schema and log guards to prevent raw card storage in `packages/db/scripts/assert-no-raw-card-fields.ts` and CI workflow
+- [X] T056 [US3] Implement payment transaction and saved payment method models in `packages/db/schema.prisma`
+- [X] T057 [US3] Implement Stripe payment intent, setup intent, and refund helpers in `apps/web/lib/stripe/payment-intents.ts`, `setup-intents.ts`, `refunds.ts`
+- [X] T058 [US3] Implement PayPal order helpers in `apps/web/lib/paypal/orders.ts`
+- [X] T059 [US3] Implement payment and refund tRPC routers in `packages/trpc/src/routers/payments.ts`
+- [X] T060 [US3] Implement Stripe and PayPal webhook routes in `apps/web/app/api/webhooks/stripe/route.ts` and `paypal/route.ts`
+- [X] T061 [US3] Implement saved payment method account management in `apps/web/app/[locale]/(account)/account/payments/page.tsx`
+- [X] T062 [US3] Implement admin refund UI in `apps/web/components/admin/payments/refund-panel.tsx`
+- [X] T063 [US3] Add schema and log guards to prevent raw card storage in `packages/db/scripts/assert-no-raw-card-fields.ts` and CI workflow
 
 **Checkpoint**: Payment flows are secure, testable, and refund-capable without storing raw card data.
 

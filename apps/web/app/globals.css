@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Brazilian Haven Beauty — Design Tokens
+   Generated from specs/tokens.md
+   ============================================================ */
+
+:root {
+  /* ── Color: Backgrounds ───────────────────────────────── */
+  --color-bg-canvas: #f1f1f1;
+  --color-bg-warm: #efe2d0;
+  --color-bg-soft: #eae2dc;
+  --color-bg-elevated: #ffffff;
+
+  /* ── Color: Text ──────────────────────────────────────── */
+  --color-text-primary: #202020;
+  --color-text-secondary: #5f5a55;
+  --color-text-inverse: #f7f3ee;
+
+  /* ── Color: Brand ─────────────────────────────────────── */
+  --color-brand-primary: #143323;
+  --color-brand-primary-hover: #1b4330;
+  --color-brand-support: #967553;
+  --color-brand-neutral: #b4a886;
+
+  /* ── Color: Accent ────────────────────────────────────── */
+  --color-accent-soft: #a3d0a7;
+  --color-accent-warm: #fc99a1;
+
+  /* ── Color: Borders ───────────────────────────────────── */
+  --color-border-soft: rgba(32, 32, 32, 0.08);
+  --color-border-default: rgba(32, 32, 32, 0.12);
+  --color-border-strong: rgba(32, 32, 32, 0.2);
+  --color-border-inverse: rgba(255, 255, 255, 0.28);
+
+  /* ── Color: States ────────────────────────────────────── */
+  --color-state-success: #3e7a56;
+  --color-state-warning: #b48946;
+  --color-state-error: #a55353;
+  --color-state-info: #40657a;
+
+  /* ── Color: Overlays & Shadows ────────────────────────── */
+  --color-overlay-soft-dark: rgba(20, 28, 24, 0.18);
+  --color-overlay-medium-dark: rgba(20, 28, 24, 0.32);
+  --color-shadow-forest: rgba(20, 51, 35, 0.08);
+  --color-shadow-neutral: rgba(32, 32, 32, 0.08);
+
+  /* ── Typography: Font Families ────────────────────────── */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Manrope", "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* ── Typography: Font Sizes ───────────────────────────── */
+  --font-size-hero: clamp(3.5rem, 8vw, 6.5rem);
+  --font-size-h1: clamp(2.75rem, 6vw, 4.5rem);
+  --font-size-h2: clamp(2rem, 4vw, 3rem);
+  --font-size-h3: 1.5rem;
+  --font-size-h4: 1.25rem;
+  --font-size-body-lg: 1.125rem;
+  --font-size-body: 1rem;
+  --font-size-small: 0.875rem;
+  --font-size-micro: 0.75rem;
+
+  /* ── Typography: Font Weights ─────────────────────────── */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ── Typography: Line Heights ─────────────────────────── */
+  --font-line-tight: 0.95;
+  --font-line-heading: 1.05;
+  --font-line-body: 1.55;
+  --font-line-relaxed: 1.7;
+
+  /* ── Typography: Letter Spacing ───────────────────────── */
+  --font-tracking-display: -0.03em;
+  --font-tracking-heading: -0.015em;
+  --font-tracking-body: 0;
+  --font-tracking-eyebrow: 0.08em;
+
+  /* ── Spacing (8px rhythm) ─────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 56px;
+  --space-11: 72px;
+  --space-12: 96px;
+  --space-13: 120px;
+
+  /* ── Radius ───────────────────────────────────────────── */
+  --radius-none: 0;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ── Shadows ──────────────────────────────────────────── */
+  --shadow-none: none;
+  --shadow-card: 0 10px 24px rgba(32, 32, 32, 0.08);
+  --shadow-panel: 0 16px 40px rgba(20, 51, 35, 0.08);
+  --shadow-button: 0 12px 24px rgba(20, 51, 35, 0.18);
+  --shadow-focus: 0 0 0 3px rgba(20, 51, 35, 0.16);
+
+  /* ── Borders ──────────────────────────────────────────── */
+  --border-width-hairline: 1px;
+  --border-width-strong: 2px;
+
+  /* ── Layout ───────────────────────────────────────────── */
+  --layout-container-max: 1200px;
+  --layout-container-wide: 1280px;
+  --layout-content-readable: 72ch;
+  --layout-sidebar-info: 320px;
+  --layout-grid-gap: 24px;
+  --layout-section-desktop: 96px;
+  --layout-section-tablet: 72px;
+  --layout-section-mobile: 48px;
+
+  /* ── Motion ───────────────────────────────────────────── */
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 220ms;
+  --motion-duration-slow: 320ms;
+  --motion-duration-reveal: 450ms;
+  --motion-ease-standard: ease;
+  --motion-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+/* ── Dark mode overrides ────────────────────────────────── */
+.dark {
+  --color-bg-canvas: #111612;
+  --color-bg-warm: #1a1610;
+  --color-bg-soft: #1e1c19;
+  --color-bg-elevated: #252520;
+
+  --color-text-primary: #f0ece6;
+  --color-text-secondary: #a09890;
+  --color-text-inverse: #202020;
+
+  --color-brand-primary: #2d6447;
+  --color-brand-primary-hover: #3a7a57;
+  --color-brand-support: #b08a65;
+  --color-brand-neutral: #c8b99a;
+
+  --color-border-soft: rgba(240, 236, 230, 0.08);
+  --color-border-default: rgba(240, 236, 230, 0.12);
+  --color-border-strong: rgba(240, 236, 230, 0.2);
+  --color-border-inverse: rgba(0, 0, 0, 0.28);
+
+  --shadow-card: 0 10px 24px rgba(0, 0, 0, 0.24);
+  --shadow-panel: 0 16px 40px rgba(0, 0, 0, 0.32);
+  --shadow-button: 0 12px 24px rgba(0, 0, 0, 0.4);
+  --shadow-focus: 0 0 0 3px rgba(45, 100, 71, 0.32);
+}
+
+/* ── Global base styles ─────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--font-line-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* ── Focus visible ──────────────────────────────────────── */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
