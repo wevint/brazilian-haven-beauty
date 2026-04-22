@@ -160,21 +160,21 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T052 [P] [US3] Write contract tests for payment and webhook endpoints in `tests/contracts/http/payments.contract.test.ts`
-- [ ] T053 [P] [US3] Write unit tests verifying payment metadata storage constraints in `tests/unit/payments/payment-storage-guards.test.ts`
-- [ ] T054 [P] [US3] Write integration tests for Stripe and PayPal success/failure webhook handling in `tests/integration/payments/webhooks.test.ts`
-- [ ] T055 [P] [US3] Write Playwright payment flow tests in `tests/e2e/payments/checkout-and-confirmation.spec.ts`
+- [X] T052 [P] [US3] Write contract tests for payment and webhook endpoints in `tests/contracts/http/payments.contract.test.ts`
+- [X] T053 [P] [US3] Write unit tests verifying payment metadata storage constraints in `tests/unit/payments/payment-storage-guards.test.ts`
+- [X] T054 [P] [US3] Write integration tests for Stripe and PayPal success/failure webhook handling in `tests/integration/payments/webhooks.test.ts`
+- [X] T055 [P] [US3] Write Playwright payment flow tests in `tests/e2e/payments/checkout-and-confirmation.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T056 [US3] Implement payment transaction and saved payment method models in `packages/db/schema.prisma`
-- [ ] T057 [US3] Implement Stripe payment intent, setup intent, and refund helpers in `apps/web/lib/stripe/payment-intents.ts`, `setup-intents.ts`, `refunds.ts`
-- [ ] T058 [US3] Implement PayPal order helpers in `apps/web/lib/paypal/orders.ts`
-- [ ] T059 [US3] Implement payment and refund tRPC routers in `packages/trpc/src/routers/payments.ts`
-- [ ] T060 [US3] Implement Stripe and PayPal webhook routes in `apps/web/app/api/webhooks/stripe/route.ts` and `paypal/route.ts`
-- [ ] T061 [US3] Implement saved payment method account management in `apps/web/app/[locale]/(account)/account/payments/page.tsx`
-- [ ] T062 [US3] Implement admin refund UI in `apps/web/components/admin/payments/refund-panel.tsx`
-- [ ] T063 [US3] Add schema and log guards to prevent raw card storage in `packages/db/scripts/assert-no-raw-card-fields.ts` and CI workflow
+- [X] T056 [US3] Implement payment transaction and saved payment method models in `packages/db/schema.prisma`
+- [X] T057 [US3] Implement Stripe payment intent, setup intent, and refund helpers in `apps/web/lib/stripe/payment-intents.ts`, `setup-intents.ts`, `refunds.ts`
+- [X] T058 [US3] Implement PayPal order helpers in `apps/web/lib/paypal/orders.ts`
+- [X] T059 [US3] Implement payment and refund tRPC routers in `packages/trpc/src/routers/payments.ts`
+- [X] T060 [US3] Implement Stripe and PayPal webhook routes in `apps/web/app/api/webhooks/stripe/route.ts` and `paypal/route.ts`
+- [X] T061 [US3] Implement saved payment method account management in `apps/web/app/[locale]/(account)/account/payments/page.tsx`
+- [X] T062 [US3] Implement admin refund UI in `apps/web/components/admin/payments/refund-panel.tsx`
+- [X] T063 [US3] Add schema and log guards to prevent raw card storage in `packages/db/scripts/assert-no-raw-card-fields.ts` and CI workflow
 
 **Checkpoint**: Payment flows are secure, testable, and refund-capable without storing raw card data.
 
