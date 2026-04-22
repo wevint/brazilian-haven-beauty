@@ -42,6 +42,12 @@ enum WaitlistStatus {
   expired
 }
 
+enum ClientPackageStatus {
+  active
+  exhausted
+  expired
+}
+
 enum PaymentGateway {
   stripe
   paypal
@@ -82,6 +88,7 @@ model User {
   staff               Staff?               @relation(fields: [staffId], references: [id])
   savedPaymentMethods SavedPaymentMethod[]
   memberships         Membership[]
+  clientPackages      ClientPackage[]
 }
 
 // ─────────────────────────────────────────────
@@ -149,6 +156,7 @@ model Service {
   pricing                ServicePricing[]
   appointments           Appointment[]
   waitlist               AppointmentWaitlist[]
+  packageServices        PackageService[]
 }
 
 // ─────────────────────────────────────────────
@@ -191,6 +199,7 @@ model Appointment {
   confirmationCode String            @unique
   notes            String?
   paymentIntentId  String?
+  clientPackageId  String?
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
 
@@ -198,6 +207,7 @@ model Appointment {
   service             Service              @relation(fields: [serviceId], references: [id])
   membership          Membership?          @relation(fields: [membershipId], references: [id])
   paymentTransactions PaymentTransaction[]
+  clientPackage       ClientPackage?       @relation(fields: [clientPackageId], references: [id])
 
   @@index([staffId, startAt])
   @@index([clientId, status])
@@ -270,8 +280,8 @@ model SavedPaymentMethod {
 model MembershipPlan {
   id                     String         @id @default(uuid())
   name                   String
-  nameTranslations       Json           // { en: string, pt: string }
-  descriptionTranslations Json          // { en: string, pt: string }
+  nameTranslations       Json
+  descriptionTranslations Json
   billingCycle           BillingCycle
   creditsPerCycle        Int
   isActive               Boolean        @default(true)
@@ -319,6 +329,59 @@ model Membership {
   createdAt            DateTime         @default(now())
   updatedAt            DateTime         @updatedAt
 
+  appointments         Appointment[]
+
+  @@index([clientId, status])
+}
+
+// ─────────────────────────────────────────────
+// ServicePackage – prepaid session bundles
+// ─────────────────────────────────────────────
+
+model ServicePackage {
+  id                      String           @id @default(uuid())
+  name                    String
+  nameTranslations        Json
+  descriptionTranslations Json
+  sessionCount            Int
+  priceUsd                Decimal          @db.Decimal(10, 2)
+  validityDays            Int
+  staffTierRestriction    StaffTier?
+  isActive                Boolean          @default(true)
+  createdAt               DateTime         @default(now())
+  clientPackages          ClientPackage[]
+  packageServices         PackageService[]
+}
+
+// ─────────────────────────────────────────────
+// PackageService – join table: package ↔ service
+// ─────────────────────────────────────────────
+
+model PackageService {
+  id        String         @id @default(uuid())
+  packageId String
+  serviceId String
+  package   ServicePackage @relation(fields: [packageId], references: [id])
+  service   Service        @relation(fields: [serviceId], references: [id])
+
+  @@unique([packageId, serviceId])
+}
+
+// ─────────────────────────────────────────────
+// ClientPackage – purchased package owned by a client
+// ─────────────────────────────────────────────
+
+model ClientPackage {
+  id                   String              @id @default(uuid())
+  clientId             String
+  packageId            String
+  sessionsRemaining    Int
+  purchasedAt          DateTime            @default(now())
+  expiresAt            DateTime
+  status               ClientPackageStatus @default(active)
+  paymentTransactionId String?
+  client               User                @relation(fields: [clientId], references: [id])
+  package              ServicePackage      @relation(fields: [packageId], references: [id])
   appointments         Appointment[]
 
   @@index([clientId, status])
