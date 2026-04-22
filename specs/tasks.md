@@ -130,23 +130,23 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T038 [P] [US2] Write contract tests for admin, appointments, services, and staff routers in `tests/contracts/trpc/admin.contract.test.ts`
-- [ ] T039 [P] [US2] Write integration tests for drag-reschedule and conflict handling in `tests/integration/admin/reschedule-appointment.test.ts`
-- [ ] T040 [P] [US2] Write integration tests for service pricing updates in `tests/integration/admin/update-service-pricing.test.ts`
-- [ ] T041 [P] [US2] Write Playwright admin flow for dashboard and calendar operations in `tests/e2e/admin/daily-operations.spec.ts`
+- [X] T038 [P] [US2] Write contract tests for admin, appointments, services, and staff routers in `tests/contracts/trpc/admin.contract.test.ts`
+- [X] T039 [P] [US2] Write integration tests for drag-reschedule and conflict handling in `tests/integration/admin/reschedule-appointment.test.ts`
+- [X] T040 [P] [US2] Write integration tests for service pricing updates in `tests/integration/admin/update-service-pricing.test.ts`
+- [X] T041 [P] [US2] Write Playwright admin flow for dashboard and calendar operations in `tests/e2e/admin/daily-operations.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T042 [US2] Implement admin role policy helpers in `apps/web/lib/auth/roles.ts`
-- [ ] T043 [US2] Implement admin-facing appointment, staff, and service routers in `packages/trpc/src/routers/admin.ts`, `appointments.ts`, `staff.ts`, `services.ts`
-- [ ] T044 [P] [US2] Build admin layout and navigation in `apps/web/app/[locale]/(admin)/admin/layout.tsx` and `apps/web/components/admin/admin-sidebar.tsx`
-- [ ] T045 [P] [US2] Build KPI and operational widgets in `apps/web/components/admin/kpi-cards.tsx` and `daily-summary.tsx`
-- [ ] T046 [P] [US2] Build calendar integration in `apps/web/components/admin/calendar/day-calendar.tsx`
-- [ ] T047 [P] [US2] Build service management table and form in `apps/web/components/admin/services/services-table.tsx` and `service-form.tsx`
-- [ ] T048 [P] [US2] Build staff management table and form in `apps/web/components/admin/staff/staff-table.tsx` and `staff-form.tsx`
-- [ ] T049 [US2] Implement admin dashboard page in `apps/web/app/[locale]/(admin)/admin/page.tsx`
-- [ ] T050 [US2] Implement appointment management page in `apps/web/app/[locale]/(admin)/admin/appointments/page.tsx`
-- [ ] T051 [US2] Implement services and staff pages in `apps/web/app/[locale]/(admin)/admin/services/page.tsx` and `staff/page.tsx`
+- [X] T042 [US2] Implement admin role policy helpers in `apps/web/lib/auth/roles.ts`
+- [X] T043 [US2] Implement admin-facing appointment, staff, and service routers in `packages/trpc/src/routers/admin.ts`, `appointments.ts`, `staff.ts`, `services.ts`
+- [X] T044 [P] [US2] Build admin layout and navigation in `apps/web/app/[locale]/(admin)/admin/layout.tsx` and `apps/web/components/admin/admin-sidebar.tsx`
+- [X] T045 [P] [US2] Build KPI and operational widgets in `apps/web/components/admin/kpi-cards.tsx` and `daily-summary.tsx`
+- [X] T046 [P] [US2] Build calendar integration in `apps/web/components/admin/calendar/day-calendar.tsx`
+- [X] T047 [P] [US2] Build service management table and form in `apps/web/components/admin/services/services-table.tsx` and `service-form.tsx`
+- [X] T048 [P] [US2] Build staff management table and form in `apps/web/components/admin/staff/staff-table.tsx` and `staff-form.tsx`
+- [X] T049 [US2] Implement admin dashboard page in `apps/web/app/[locale]/(admin)/admin/page.tsx`
+- [X] T050 [US2] Implement appointment management page in `apps/web/app/[locale]/(admin)/admin/appointments/page.tsx`
+- [X] T051 [US2] Implement services and staff pages in `apps/web/app/[locale]/(admin)/admin/services/page.tsx` and `staff/page.tsx`
 
 **Checkpoint**: Admin users can operate day-to-day scheduling and pricing without Vagaro.
 
