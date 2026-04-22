@@ -18,16 +18,33 @@ export interface CreateRefundResult {
 /**
  * Create a Stripe refund for a PaymentIntent.
  * Supports full and partial refunds.
+ *
+ * Accepts both the legacy `CreateRefundInput` shape and the T057 params shape:
+ *   { paymentIntentId, reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer' }
  */
 export async function createRefund(
   input: CreateRefundInput
-): Promise<CreateRefundResult> {
+): Promise<CreateRefundResult>;
+export async function createRefund(params: {
+  paymentIntentId: string;
+  reason?: "duplicate" | "fraudulent" | "requested_by_customer";
+}): Promise<{ refundId: string; status: string }>;
+export async function createRefund(
+  inputOrParams:
+    | CreateRefundInput
+    | {
+        paymentIntentId: string;
+        reason?: "duplicate" | "fraudulent" | "requested_by_customer";
+      }
+): Promise<CreateRefundResult | { refundId: string; status: string }> {
+  const input = inputOrParams as CreateRefundInput;
+
   const refund = await stripe.refunds.create({
     payment_intent: input.paymentIntentId,
     ...(input.amountCents !== undefined
       ? { amount: input.amountCents }
       : {}),
-    reason: input.reason,
+    reason: input.reason as Stripe.RefundCreateParams.Reason | undefined,
     metadata: input.metadata,
   });
 

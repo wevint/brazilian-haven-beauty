@@ -32,8 +32,61 @@ interface PayPalOrderResponse {
 }
 
 /**
- * Create a PayPal Order for checkout.
- * Returns the orderId and the approval URL for client-side redirect or JS SDK.
+ * Create a PayPal Order for checkout (US3/T058).
+ * appointmentId stored as custom_id for webhook lookup.
+ * amountUsd is in cents — converted to dollars for PayPal API.
+ */
+export async function createPayPalOrder(params: {
+  appointmentId: string;
+  amountUsd: number; // cents
+}): Promise<{ orderId: string; approveUrl: string }> {
+  const dollarAmount = (params.amountUsd / 100).toFixed(2);
+
+  const order = await paypalFetch<PayPalOrderResponse>("/v2/checkout/orders", {
+    method: "POST",
+    body: JSON.stringify({
+      intent: "CAPTURE",
+      purchase_units: [
+        {
+          amount: {
+            currency_code: "USD",
+            value: dollarAmount,
+          },
+          custom_id: params.appointmentId,
+        },
+      ],
+    }),
+  });
+
+  const approveLink = order.links.find((l) => l.rel === "approve");
+
+  return {
+    orderId: order.id,
+    approveUrl: approveLink?.href ?? "",
+  };
+}
+
+/**
+ * Capture a PayPal Order after buyer approval (US3/T058).
+ */
+export async function capturePayPalOrder(
+  orderId: string
+): Promise<{ status: string; captureId: string }> {
+  const order = await paypalFetch<PayPalOrderResponse>(
+    `/v2/checkout/orders/${orderId}/capture`,
+    { method: "POST" }
+  );
+
+  const capture = order.purchase_units?.[0]?.payments?.captures?.[0];
+
+  return {
+    status: order.status,
+    captureId: capture?.id ?? "",
+  };
+}
+
+/**
+ * Create a PayPal Order for checkout (legacy signature).
  */
 export async function createOrder(
   input: CreateOrderInput
@@ -66,7 +119,7 @@ export async function createOrder(
 }
 
 /**
- * Capture a PayPal Order after buyer approval.
+ * Capture a PayPal Order after buyer approval (legacy signature).
  */
 export async function captureOrder(
   orderId: string
@@ -76,8 +129,7 @@ export async function captureOrder(
     { method: "POST" }
   );
 
-  const capture =
-    order.purchase_units?.[0]?.payments?.captures?.[0];
+  const capture = order.purchase_units?.[0]?.payments?.captures?.[0];
 
   return {
     orderId: order.id,

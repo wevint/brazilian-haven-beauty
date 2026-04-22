@@ -1,47 +1,34 @@
-import { NextRequest, NextResponse } from "next/server";
-import { logger } from "@/lib/observability/logger";
+import { handlePayPalWebhook } from "@/lib/paypal/webhook-handler";
 
 /**
- * PayPal webhook handler.
+ * PayPal webhook handler (US3 — T060).
  *
- * Validates the PayPal webhook signature and routes events to the
- * appropriate handlers. Full event handling is implemented in US3 (T060).
- *
- * PayPal webhook signature verification requires:
- * - PAYPAL-TRANSMISSION-ID header
- * - PAYPAL-TRANSMISSION-TIME header
- * - PAYPAL-CERT-URL header
- * - PAYPAL-AUTH-ALGO header
- * - PAYPAL-TRANSMISSION-SIG header
+ * Parses the JSON body and delegates to the domain handler.
  */
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: Request) {
   let body: unknown;
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return new Response(JSON.stringify({ error: "Invalid payload" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
-  const event = body as { event_type?: string; id?: string };
+  if (!body || typeof body !== "object") {
+    return new Response(JSON.stringify({ error: "Invalid payload" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
-  logger.info("PayPal webhook received", {
-    type: event.event_type,
-    id: event.id,
+  await handlePayPalWebhook(
+    body as { event_type: string; resource: unknown }
+  );
+
+  return new Response(JSON.stringify({ received: true }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
   });
-
-  // TODO (T060): Implement PayPal webhook signature verification using
-  // the PayPal SDK verifyWebhookSignature endpoint before processing events.
-
-  switch (event.event_type) {
-    case "PAYMENT.CAPTURE.COMPLETED":
-      // TODO (T060): Call appointments.confirm internally
-      break;
-    case "PAYMENT.CAPTURE.DENIED":
-      // TODO (T060): Release slot reservation
-      break;
-    default:
-      logger.debug("Unhandled PayPal event type", { type: event.event_type });
-  }
-
-  return NextResponse.json({ received: true });
 }

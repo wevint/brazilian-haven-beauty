@@ -8,6 +8,8 @@ export interface CreatePaymentIntentInput {
   metadata?: Record<string, string>;
   /** Reservation token used to tie the PaymentIntent to a slot reservation. */
   reservationToken?: string;
+  /** Appointment ID stored in metadata for webhook lookup (US3/T057). */
+  appointmentId?: string;
 }
 
 export interface CreatePaymentIntentResult {
@@ -18,20 +20,51 @@ export interface CreatePaymentIntentResult {
 /**
  * Create a Stripe PaymentIntent for a booking checkout.
  * Returns the clientSecret for mounting the Stripe Payment Element.
+ *
+ * Supports both legacy (amountCents) and US3 (amountUsd in cents) call patterns.
  */
 export async function createPaymentIntent(
   input: CreatePaymentIntentInput
+): Promise<CreatePaymentIntentResult>;
+export async function createPaymentIntent(params: {
+  appointmentId: string;
+  amountUsd: number;
+  customerId?: string;
+  metadata?: Record<string, string>;
+}): Promise<CreatePaymentIntentResult>;
+export async function createPaymentIntent(
+  inputOrParams:
+    | CreatePaymentIntentInput
+    | {
+        appointmentId: string;
+        amountUsd: number;
+        customerId?: string;
+        metadata?: Record<string, string>;
+      }
 ): Promise<CreatePaymentIntentResult> {
+  // Normalise both call signatures to a common shape
+  const isNewStyle = "amountUsd" in inputOrParams;
+  const amount = isNewStyle
+    ? (inputOrParams as { amountUsd: number }).amountUsd
+    : (inputOrParams as CreatePaymentIntentInput).amountCents;
+  const customerId = inputOrParams.customerId;
+  const appointmentId = isNewStyle
+    ? (inputOrParams as { appointmentId: string }).appointmentId
+    : (inputOrParams as CreatePaymentIntentInput).appointmentId;
+  const extraMeta = inputOrParams.metadata ?? {};
+  const reservationToken = isNewStyle
+    ? undefined
+    : (inputOrParams as CreatePaymentIntentInput).reservationToken;
+
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: input.amountCents,
-    currency: input.currency ?? "usd",
-    customer: input.customerId,
+    amount,
+    currency: "usd",
+    customer: customerId,
     automatic_payment_methods: { enabled: true },
     metadata: {
-      ...input.metadata,
-      ...(input.reservationToken
-        ? { reservationToken: input.reservationToken }
-        : {}),
+      ...extraMeta,
+      ...(appointmentId ? { appointmentId } : {}),
+      ...(reservationToken ? { reservationToken } : {}),
     },
   });
 

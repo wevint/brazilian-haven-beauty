@@ -1,6 +1,9 @@
 // Re-export the Prisma client singleton
 export { db } from "./client";
 
+// Alias for legacy imports that use `prisma` instead of `db`
+export { db as prisma } from "./client";
+
 // Re-export all repository helpers
 export * from "./repositories";
 
