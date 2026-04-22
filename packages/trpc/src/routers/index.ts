@@ -9,6 +9,7 @@ import { availabilityRouter } from "./availability";
 import { appointmentsRouter } from "./appointments";
 import { adminRouter } from "./admin";
 import { paymentsRouter } from "./payments";
+import { membershipsRouter } from "./memberships";
 
 export const appRouter = router({
   services: servicesRouter,
@@ -17,6 +18,7 @@ export const appRouter = router({
   appointments: appointmentsRouter,
   admin: adminRouter,
   payments: paymentsRouter,
+  memberships: membershipsRouter,
 });
 
 export type AppRouter = typeof appRouter;

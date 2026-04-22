@@ -54,6 +54,18 @@ enum PaymentStatus {
   refunded
 }
 
+enum BillingCycle {
+  monthly
+  annual
+}
+
+enum MembershipStatus {
+  active
+  paused
+  cancelled
+  expired
+}
+
 // ─────────────────────────────────────────────
 // User (Auth account for staff / admin dashboard)
 // ─────────────────────────────────────────────
@@ -69,6 +81,7 @@ model User {
 
   staff               Staff?               @relation(fields: [staffId], references: [id])
   savedPaymentMethods SavedPaymentMethod[]
+  memberships         Membership[]
 }
 
 // ─────────────────────────────────────────────
@@ -174,6 +187,7 @@ model Appointment {
   endAt            DateTime
   status           AppointmentStatus @default(scheduled)
   paymentStatus    PaymentStatus?
+  membershipId     String?
   confirmationCode String            @unique
   notes            String?
   paymentIntentId  String?
@@ -182,6 +196,7 @@ model Appointment {
 
   staff               Staff                @relation(fields: [staffId], references: [id])
   service             Service              @relation(fields: [serviceId], references: [id])
+  membership          Membership?          @relation(fields: [membershipId], references: [id])
   paymentTransactions PaymentTransaction[]
 
   @@index([staffId, startAt])
@@ -246,4 +261,65 @@ model SavedPaymentMethod {
   brand                 String
   isDefault             Boolean        @default(false)
   createdAt             DateTime       @default(now())
+}
+
+// ─────────────────────────────────────────────
+// MembershipPlan – subscription plan definition
+// ─────────────────────────────────────────────
+
+model MembershipPlan {
+  id                     String         @id @default(uuid())
+  name                   String
+  nameTranslations       Json           // { en: string, pt: string }
+  descriptionTranslations Json          // { en: string, pt: string }
+  billingCycle           BillingCycle
+  creditsPerCycle        Int
+  isActive               Boolean        @default(true)
+  stripeProductId        String
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+
+  pricing                PlanPricing[]
+  memberships            Membership[]
+}
+
+// ─────────────────────────────────────────────
+// PlanPricing – per-tier price for a plan
+// ─────────────────────────────────────────────
+
+model PlanPricing {
+  id            String         @id @default(uuid())
+  planId        String
+  plan          MembershipPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  staffTier     StaffTier
+  priceUsd      Decimal        @db.Decimal(10, 2)
+  stripePriceId String
+
+  @@unique([planId, staffTier])
+  @@index([planId])
+}
+
+// ─────────────────────────────────────────────
+// Membership – client subscription instance
+// ─────────────────────────────────────────────
+
+model Membership {
+  id                   String           @id @default(uuid())
+  clientId             String
+  client               User             @relation(fields: [clientId], references: [id])
+  planId               String
+  plan                 MembershipPlan   @relation(fields: [planId], references: [id])
+  staffTier            StaffTier
+  status               MembershipStatus @default(active)
+  creditBalance        Int
+  billingStart         DateTime
+  nextRenewalAt        DateTime
+  stripeSubscriptionId String
+  cancelledAt          DateTime?
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  appointments         Appointment[]
+
+  @@index([clientId, status])
 }

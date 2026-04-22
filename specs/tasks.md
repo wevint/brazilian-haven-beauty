@@ -195,12 +195,12 @@ Items not covered here require separate specification before task generation.
 
 ### Implementation for User Story 4
 
-- [ ] T068 [US4] Implement membership plan, plan pricing, and membership models in `packages/db/schema.prisma`
-- [ ] T069 [US4] Implement membership domain services in `apps/web/lib/memberships/plans.ts`, `credits.ts`, `renewals.ts`
-- [ ] T070 [US4] Implement membership and plans routers in `packages/trpc/src/routers/memberships.ts`
-- [ ] T071 [P] [US4] Build membership cards and plan comparison components in `apps/web/components/public/membership-card.tsx` and `membership-grid.tsx`
-- [ ] T072 [US4] Build memberships page in `apps/web/app/[locale]/(public)/memberships/page.tsx`
-- [ ] T073 [US4] Build account membership overview in `apps/web/app/[locale]/(account)/account/memberships/page.tsx`
+- [X] T068 [US4] Implement membership plan, plan pricing, and membership models in `packages/db/schema.prisma`
+- [X] T069 [US4] Implement membership domain services in `apps/web/lib/memberships/plans.ts`, `credits.ts`, `renewals.ts`
+- [X] T070 [US4] Implement membership and plans routers in `packages/trpc/src/routers/memberships.ts`
+- [X] T071 [P] [US4] Build membership cards and plan comparison components in `apps/web/components/public/membership-card.tsx` and `membership-grid.tsx`
+- [X] T072 [US4] Build memberships page in `apps/web/app/[locale]/(public)/memberships/page.tsx`
+- [X] T073 [US4] Build account membership overview in `apps/web/app/[locale]/(account)/account/memberships/page.tsx`
 
 **Checkpoint**: Membership sales and credit-based usage are independently functional.
 
