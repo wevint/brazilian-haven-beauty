@@ -221,12 +221,12 @@ Items not covered here require separate specification before task generation.
 
 ### Implementation for User Story 5
 
-- [ ] T078 [US5] Implement package and client package models in `packages/db/schema.prisma`
-- [ ] T079 [US5] Implement package domain services in `apps/web/lib/packages/packages.ts` and `balance.ts`
-- [ ] T080 [US5] Implement packages router in `packages/trpc/src/routers/packages.ts`
-- [ ] T081 [P] [US5] Build package marketing and package card components in `apps/web/components/public/package-card.tsx`
-- [ ] T082 [US5] Build packages page in `apps/web/app/[locale]/(public)/packages/page.tsx`
-- [ ] T083 [US5] Build account package balance view in `apps/web/app/[locale]/(account)/account/packages/page.tsx`
+- [X] T078 [US5] Implement package and client package models in `packages/db/schema.prisma`
+- [X] T079 [US5] Implement package domain services in `apps/web/lib/packages/packages.ts` and `balance.ts`
+- [X] T080 [US5] Implement packages router in `packages/trpc/src/routers/packages.ts`
+- [X] T081 [P] [US5] Build package marketing and package card components in `apps/web/components/public/package-card.tsx`
+- [X] T082 [US5] Build packages page in `apps/web/app/[locale]/(public)/packages/page.tsx`
+- [X] T083 [US5] Build account package balance view in `apps/web/app/[locale]/(account)/account/packages/page.tsx`
 
 **Checkpoint**: Package sales and usage are independently functional.
 
