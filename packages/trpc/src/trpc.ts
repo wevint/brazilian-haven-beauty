@@ -7,7 +7,11 @@ import { z } from "zod";
 
 export interface TRPCContext {
   session: { user?: { id: string; email: string; role?: string } } | null;
+  headers?: Headers | ReadonlyHeaders;
 }
+
+// Allow ReadonlyHeaders from Next.js (duck-typed)
+type ReadonlyHeaders = Iterable<[string, string]>;
 
 const t = initTRPC.context<TRPCContext>().create();
 

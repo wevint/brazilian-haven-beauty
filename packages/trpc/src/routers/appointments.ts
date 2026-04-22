@@ -4,10 +4,11 @@
  */
 
 import { z } from "zod";
-import { router, protectedProcedure } from "../trpc";
+import { router, protectedProcedure, adminProcedure } from "../trpc";
 import { prisma } from "@bhb/db";
 import { createBooking } from "../../../apps/web/lib/booking/create-booking";
 import { SlotUnavailableError } from "../../../apps/web/lib/booking/create-booking";
+import { rescheduleAppointment } from "../../../apps/web/lib/admin/appointments";
 import { TRPCError } from "@trpc/server";
 
 export const appointmentsRouter = router({
@@ -106,4 +107,94 @@ export const appointmentsRouter = router({
       },
     }));
   }),
+
+  /**
+   * List appointments with optional filters (admin only).
+   */
+  list: adminProcedure
+    .input(
+      z
+        .object({
+          date: z.date().optional(),
+          staffId: z.string().optional(),
+          status: z
+            .enum([
+              "scheduled",
+              "checked_in",
+              "completed",
+              "no_show",
+              "cancelled",
+            ])
+            .optional(),
+        })
+        .optional()
+    )
+    .query(async ({ input }) => {
+      const filters = input ?? {};
+      const where: Record<string, unknown> = {};
+
+      if (filters.date) {
+        const d = filters.date;
+        const start = new Date(d);
+        start.setUTCHours(0, 0, 0, 0);
+        const end = new Date(d);
+        end.setUTCHours(23, 59, 59, 999);
+        where.startAt = { gte: start, lte: end };
+      }
+
+      if (filters.staffId) {
+        where.staffId = filters.staffId;
+      }
+
+      if (filters.status) {
+        where.status = filters.status;
+      }
+
+      const appointments = await prisma.appointment.findMany({
+        where,
+        include: {
+          service: { select: { id: true, name: true } },
+          staff: { select: { id: true, firstName: true, lastName: true } },
+        },
+        orderBy: { startAt: "asc" },
+      });
+
+      return appointments.map((appt) => ({
+        id: appt.id,
+        clientId: appt.clientId,
+        staffId: appt.staffId,
+        serviceId: appt.serviceId,
+        startAt: appt.startAt,
+        endAt: appt.endAt,
+        status: appt.status,
+        client: { name: appt.clientId, email: "" },
+        staff: {
+          name: `${appt.staff.firstName} ${appt.staff.lastName}`,
+        },
+        service: { name: appt.service.name },
+      }));
+    }),
+
+  /**
+   * Reschedule an appointment to a new start time (admin only).
+   */
+  reschedule: adminProcedure
+    .input(
+      z.object({
+        appointmentId: z.string(),
+        newStartAt: z.date(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const updated = await rescheduleAppointment(
+        input.appointmentId,
+        input.newStartAt
+      );
+      return {
+        id: updated.id,
+        startAt: updated.startAt,
+        endAt: updated.endAt,
+        status: updated.status,
+      };
+    }),
 });

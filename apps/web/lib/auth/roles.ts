@@ -1,4 +1,5 @@
 import type { Session } from "next-auth";
+import { TRPCError } from "@trpc/server";
 
 /** Extended user type that includes the role from the JWT callback. */
 export interface SessionUser {
@@ -58,4 +59,63 @@ export function requireRole(
   if (!ADMIN_ROLES.includes((user.role ?? "") as AdminRole)) {
     throw new Error("FORBIDDEN");
   }
+}
+
+// ── Role predicate helpers used in admin procedures ──────────────────────────
+
+export type Role = string;
+
+/**
+ * Returns true if the role has any admin-level access.
+ */
+export function isAdminRole(role: Role): boolean {
+  return ADMIN_ROLES.includes(role as AdminRole);
+}
+
+/**
+ * Returns true if the role is owner.
+ */
+export function isOwnerRole(role: Role): boolean {
+  return role === "owner";
+}
+
+/**
+ * Throws TRPCError UNAUTHORIZED/FORBIDDEN if session is not an admin.
+ */
+export function requireAdmin(session: Session | null): void {
+  if (!session?.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  const user = session.user as SessionUser;
+  if (!ADMIN_ROLES.includes((user.role ?? "") as AdminRole)) {
+    throw new TRPCError({ code: "FORBIDDEN" });
+  }
+}
+
+/**
+ * Throws TRPCError UNAUTHORIZED/FORBIDDEN if session is not an owner.
+ */
+export function requireOwner(session: Session | null): void {
+  if (!session?.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  const user = session.user as SessionUser;
+  if (user.role !== "owner") {
+    throw new TRPCError({ code: "FORBIDDEN" });
+  }
+}
+
+/** Only OWNER can manage staff. */
+export function canManageStaff(role: Role): boolean {
+  return role === "owner";
+}
+
+/** ADMIN (manager) and OWNER can manage services. */
+export function canManageServices(role: Role): boolean {
+  return role === "owner" || role === "manager";
+}
+
+/** ADMIN (manager) and OWNER can view reports. */
+export function canViewReports(role: Role): boolean {
+  return role === "owner" || role === "manager";
 }

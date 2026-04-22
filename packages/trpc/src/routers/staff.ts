@@ -4,7 +4,7 @@
  */
 
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, adminProcedure } from "../trpc";
 import { prisma } from "@bhb/db";
 
 export const staffRouter = router({
@@ -72,4 +72,30 @@ export const staffRouter = router({
           : [],
       };
     }),
+
+  /**
+   * List all staff members including inactive ones (admin only).
+   */
+  listAdmin: adminProcedure.query(async () => {
+    const staffMembers = await prisma.staff.findMany({
+      include: {
+        user: { select: { email: true } },
+      },
+      orderBy: { displayOrder: "asc" },
+    });
+
+    return staffMembers.map((s) => ({
+      id: s.id,
+      name: `${s.firstName} ${s.lastName}`,
+      firstName: s.firstName,
+      lastName: s.lastName,
+      tier: s.tier,
+      specialties: s.specialties,
+      isActive: s.isActive,
+      bio: s.bio ?? null,
+      photoUrl: s.photoUrl ?? null,
+      email: s.user?.email ?? null,
+      phone: null as string | null,
+    }));
+  }),
 });

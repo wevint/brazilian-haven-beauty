@@ -8,3 +8,5 @@
  */
 
 export type SmsLocale = "en" | "pt";
+
+export { bookingConfirmationSms } from "./booking-confirmation";

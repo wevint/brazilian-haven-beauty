@@ -8,3 +8,6 @@
 
 export { BaseEmail } from "./base";
 export type { BaseEmailProps } from "./base";
+
+export { BookingConfirmationEmail } from "./booking-confirmation";
+export type { BookingConfirmationEmailProps } from "./booking-confirmation";

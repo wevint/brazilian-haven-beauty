@@ -4,8 +4,9 @@
  */
 
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, adminProcedure } from "../trpc";
 import { prisma } from "@bhb/db";
+import { updateServicePricing } from "../../../apps/web/lib/admin/services";
 
 const LocaleSchema = z.enum(["en", "pt"]);
 
@@ -108,6 +109,64 @@ export const servicesRouter = router({
           priceUsd: p.priceUsd,
           durationMinutes: p.durationMinutes,
         })),
+      };
+    }),
+
+  /**
+   * Update a service's metadata (admin only).
+   */
+  update: adminProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string().optional(),
+        description: z.string().optional(),
+        isActive: z.boolean().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { id, name, description, isActive } = input;
+      const updated = await prisma.service.update({
+        where: { id },
+        data: {
+          ...(name !== undefined ? { name } : {}),
+          ...(description !== undefined ? { description } : {}),
+          ...(isActive !== undefined ? { active: isActive } : {}),
+        },
+      });
+      return {
+        id: updated.id,
+        name: updated.name,
+        description: updated.description,
+        active: updated.active,
+      };
+    }),
+
+  /**
+   * Update or create pricing for a service + staffTier combination (admin only).
+   */
+  updatePricing: adminProcedure
+    .input(
+      z.object({
+        serviceId: z.string(),
+        staffTier: z.enum(["junior", "senior", "master"]),
+        priceUsd: z.number(),
+        durationMinutes: z.number(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const pricing = await updateServicePricing(
+        input.serviceId,
+        input.staffTier,
+        input.priceUsd,
+        input.durationMinutes
+      );
+      return {
+        id: pricing.id,
+        serviceId: pricing.serviceId,
+        staffTier: pricing.staffTier,
+        priceUsd: pricing.priceUsd,
+        durationMinutes: pricing.durationMinutes,
       };
     }),
 });

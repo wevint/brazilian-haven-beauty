@@ -7,12 +7,14 @@ import { servicesRouter } from "./services";
 import { staffRouter } from "./staff";
 import { availabilityRouter } from "./availability";
 import { appointmentsRouter } from "./appointments";
+import { adminRouter } from "./admin";
 
 export const appRouter = router({
   services: servicesRouter,
   staff: staffRouter,
   availability: availabilityRouter,
   appointments: appointmentsRouter,
+  admin: adminRouter,
 });
 
 export type AppRouter = typeof appRouter;
