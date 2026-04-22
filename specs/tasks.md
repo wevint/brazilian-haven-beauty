@@ -214,10 +214,10 @@ Items not covered here require separate specification before task generation.
 
 ### Tests for User Story 5 ⚠️
 
-- [ ] T074 [P] [US5] Write contract tests for packages in `tests/contracts/trpc/packages.contract.test.ts`
-- [ ] T075 [P] [US5] Write unit tests for package balance decrement and expiry rules in `tests/unit/packages/package-balance.test.ts`
-- [ ] T076 [P] [US5] Write integration tests for package purchase and booking application in `tests/integration/packages/apply-package-session.test.ts`
-- [ ] T077 [P] [US5] Write Playwright package purchase flow in `tests/e2e/packages/purchase-and-apply.spec.ts`
+- [X] T074 [P] [US5] Write contract tests for packages in `tests/contracts/trpc/packages.contract.test.ts`
+- [X] T075 [P] [US5] Write unit tests for package balance decrement and expiry rules in `tests/unit/packages/package-balance.test.ts`
+- [X] T076 [P] [US5] Write integration tests for package purchase and booking application in `tests/integration/packages/apply-package-session.test.ts`
+- [X] T077 [P] [US5] Write Playwright package purchase flow in `tests/e2e/packages/purchase-and-apply.spec.ts`
 
 ### Implementation for User Story 5
 
